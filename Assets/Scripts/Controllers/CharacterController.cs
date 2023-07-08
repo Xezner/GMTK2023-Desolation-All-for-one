@@ -9,7 +9,8 @@ public class CharacterController : ManagerBehaviour
     [SerializeField] private float _possessionRadius = 3f;
     [SerializeField] private GameObject _character;
     [SerializeField] private Rigidbody2D _rigidBody;
-
+    [SerializeField] private PossessionRadiusDrawer _radiusDrawer;
+    public float PossessionRadius { get { return _possessionRadius; } }
     public GameObject Character { get { return _character; } }
 
     private void Start()
@@ -27,8 +28,7 @@ public class CharacterController : ManagerBehaviour
     private void Update()
     {
         if (!GameManager.IsGamePaused)
-        {
-            RotateCharacterOnMousePosition();
+        {   
             if (Input.GetMouseButtonDown(1))
             {
                 CheckPossessionRadius();
@@ -40,6 +40,7 @@ public class CharacterController : ManagerBehaviour
     {
         if (!GameManager.IsGamePaused)
         {
+            RotateCharacterOnMousePosition();
             MovementControl();
         }
     }
@@ -70,7 +71,8 @@ public class CharacterController : ManagerBehaviour
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
         float moveVertical = Input.GetAxisRaw("Vertical");
 
-        Vector2 movement = new Vector2(moveHorizontal, moveVertical);
+        Debug.Log($"{moveHorizontal}, {moveVertical}");
+        Vector2 movement = new(moveHorizontal, moveVertical);
 
         movement = movement.normalized;
 
@@ -79,6 +81,7 @@ public class CharacterController : ManagerBehaviour
 
     private void CheckPossessionRadius()
     {
+        _radiusDrawer.StartDrawing();
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
 
