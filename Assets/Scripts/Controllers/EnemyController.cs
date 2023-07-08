@@ -14,6 +14,7 @@ public class EnemyController : ManagerBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(gameObject.name);
         InitSpawn();
     }
 
@@ -28,21 +29,32 @@ public class EnemyController : ManagerBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(_weaponController.IsPlayer)
+        if(GameManager.IsWaitingForFirstPossession)
         {
-            Destroy(this);
+            _rigidbody2D.velocity = Vector2.zero;
+            return;
+        }
+
+        if(GameManager.IsGamePaused)
+        {
+            _rigidbody2D.velocity = Vector2.zero;
+            return;
+        }
+
+        if (_weaponController.IsPlayer)
+        {
             return;
         }
 
         if (!_weaponController.IsPlayer && _targetPosition != null)
         {
             Vector3 direction = (_targetPosition.position - transform.position).normalized;
-            
+
             float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
             float currentAngle = Mathf.LerpAngle(_rigidbody2D.rotation, targetAngle, _characterData.TurnRate * Time.deltaTime);
             _rigidbody2D.SetRotation(currentAngle);
 
-            
+
 
             //Vector2 obstacleDetectionForce = ObstacleDetectionForce();
             //Vector2 enemyDetectionForce = EnemyDetectionForce();

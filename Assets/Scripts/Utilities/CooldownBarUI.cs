@@ -7,6 +7,9 @@ using UnityEngine.UI;
 public class CooldownBarUI : ManagerBehaviour
 {
     [SerializeField] private Image _cooldownBar;
+    public Image CooldownBar { get { return _cooldownBar; } }
+
+
     private RectTransform _uiRectTransform;
     public static CooldownBarUI Instance;
     public Transform TargetObject;
@@ -20,6 +23,7 @@ public class CooldownBarUI : ManagerBehaviour
 
     private void Start()
     {
+        Debug.Log(gameObject.name);
         _uiRectTransform = GetComponent<RectTransform>();
     }
 
