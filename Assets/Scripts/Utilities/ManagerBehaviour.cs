@@ -9,11 +9,4 @@ public class ManagerBehaviour : MonoBehaviour
     {
         get { return _gameManager.Instance(this); }
     }
-
-
-
-    private void Start()
-    {
-        DontDestroyOnLoad(this.gameObject);
-    }
 }
