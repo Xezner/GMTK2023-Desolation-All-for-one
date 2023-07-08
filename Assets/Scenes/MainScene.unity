@@ -609,6 +609,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2519183880687555595, guid: cbc3bac0ef75b2f4bbed8b8d913ff585, type: 3}
+      propertyPath: m_SleepingMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2587373780839064061, guid: cbc3bac0ef75b2f4bbed8b8d913ff585, type: 3}
       propertyPath: m_Name
       value: Character (1)
@@ -1299,6 +1303,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2519183880687555595, guid: 7ae1e2a00c1ed624ca007d795a967596, type: 3}
+      propertyPath: m_SleepingMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2587373780839064061, guid: 7ae1e2a00c1ed624ca007d795a967596, type: 3}
       propertyPath: m_Name
       value: Character 1
@@ -1526,6 +1534,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2519183880687555595, guid: 3d59d67843072b24dbae676fdcdee5d2, type: 3}
+      propertyPath: m_SleepingMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2587373780839064061, guid: 3d59d67843072b24dbae676fdcdee5d2, type: 3}
       propertyPath: m_Name
       value: Character 2

@@ -6,4 +6,12 @@ using UnityEngine;
 public class CharacterData : ScriptableObject
 {
     public GameObject Character;
+    public float HP;
+    public float AtkDamage;
+    public float AtkRate;
+    public float AtkRange;
+    public float Movespeed;
+    public float TurnRate;
+    public float HealthDegen;
+    public int PossessionGauge;
 }
