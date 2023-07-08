@@ -15,31 +15,39 @@ public class WeaponController : ManagerBehaviour
 
     private void Start()
     {
+        _attackRate = GetComponentInParent<CharacterDataHolder>().CharacterData.AtkRate;
         _attackRateHolder = _attackRate;
         _cooldownBar.fillAmount = 0f;
     }
 
     private void Update()
     {
-        if (!GameManager.IsGamePaused && IsPlayer)
+        if (!GameManager.IsGamePaused)
         {
             if (!_canAttack)
             {
                 _attackRateHolder -= Time.deltaTime;
 
-                _cooldownBar.fillAmount = _attackRateHolder / _attackRate;
+                if (IsPlayer)
+                {
+                    _cooldownBar.fillAmount = _attackRateHolder / _attackRate;
+                }
 
                 if (_attackRateHolder <= 0f)
                 {
 
                     _canAttack = true;
                     _attackRateHolder = _attackRate;
-                    _cooldownBar.fillAmount = 0f;
+
+                    if (IsPlayer)
+                    {
+                        _cooldownBar.fillAmount = 0f;
+                    }
                 }
             }
             else
             {
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) || !IsPlayer)
                 {
                     _weaponAnimator.SetTrigger(NORMAL_ATTACK_TRIGGER);
                     _canAttack = false;

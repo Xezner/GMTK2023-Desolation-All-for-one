@@ -105,15 +105,24 @@ public class CharacterController : ManagerBehaviour
     {
         //reset curret weapon controller before switching up
         _character.GetComponentInChildren<WeaponController>().IsPlayer = false;
-
+        _rigidBody.velocity = Vector2.zero;
+        
         //switches current character to the new character and reassign all the values
         _character = characterData;
-
         _rigidBody = _character.GetComponent<Rigidbody2D>();
         _character.GetComponentInChildren<WeaponController>().IsPlayer = true;
 
+        //Update cooldown bar UI Tracker
         CooldownBarUI.Instance.TargetObject = _character.transform;
+
+        //Update Camera control tracker
         GetComponent<CameraController>().Character = _character;
-        
+
+        //Update all enemy tracking cjaracter
+        EnemyController[] enemyControllerList = FindObjectsOfType<EnemyController>();
+        foreach(EnemyController enemyController in enemyControllerList)
+        {
+            enemyController.TargetPosition = _character.transform;
+        }
     }
 }
