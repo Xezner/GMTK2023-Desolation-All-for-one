@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class GameManager : ManagerBehaviour
 {
+
+
+    public bool IsGamePaused = false;
+
+
     // Start is called before the first frame update
     void Start()
     {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WeaponController : MonoBehaviour
+public class WeaponController : ManagerBehaviour
 {
     [SerializeField] private Animator _weaponAnimator;
     [SerializeField] private float _attackRate = 1f;
@@ -19,31 +19,34 @@ public class WeaponController : MonoBehaviour
 
     private void Update()
     {
-        if (!_canAttack)
+        if (!GameManager.IsGamePaused)
         {
-            _attackRateHolder -= Time.deltaTime;
-
-            _cooldownBar.fillAmount = _attackRateHolder / _attackRate;
-
-            if (_attackRateHolder <= 0f)
+            if (!_canAttack)
             {
-                
-                _canAttack = true;
-                _attackRateHolder = _attackRate;
-                _cooldownBar.fillAmount = 0f;
+                _attackRateHolder -= Time.deltaTime;
+
+                _cooldownBar.fillAmount = _attackRateHolder / _attackRate;
+
+                if (_attackRateHolder <= 0f)
+                {
+
+                    _canAttack = true;
+                    _attackRateHolder = _attackRate;
+                    _cooldownBar.fillAmount = 0f;
+                }
             }
-        }
-        else
-        {
-            if (Input.GetMouseButtonDown(0))
+            else
             {
-                _weaponAnimator.SetTrigger(NORMAL_ATTACK_TRIGGER);
-                _canAttack = false;
-            }
+                if (Input.GetMouseButtonDown(0))
+                {
+                    _weaponAnimator.SetTrigger(NORMAL_ATTACK_TRIGGER);
+                    _canAttack = false;
+                }
 
-            if (Input.GetMouseButtonDown(1))
-            {
-                Debug.LogError("RIGHT CLICK");
+                if (Input.GetMouseButtonDown(1))
+                {
+                    Debug.LogError("RIGHT CLICK");
+                }
             }
         }
     }
