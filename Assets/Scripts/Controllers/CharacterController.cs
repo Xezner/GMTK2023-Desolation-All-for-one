@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.U2D.Animation;
 using UnityEngine;
 
 public class CharacterController : ManagerBehaviour
@@ -10,6 +11,8 @@ public class CharacterController : ManagerBehaviour
     [SerializeField] private GameObject _character;
     [SerializeField] private Rigidbody2D _rigidBody;
     [SerializeField] private PossessionRadiusDrawer _radiusDrawer;
+    [SerializeField] private GameObject _symbiote;
+    [SerializeField] private GameObject _ftuePrompt;
     public float PossessionRadius { get { return _possessionRadius; } }
     public GameObject Character { get { return _character; } }
 
@@ -20,9 +23,12 @@ public class CharacterController : ManagerBehaviour
 
     private void TempInit()
     {
-        CooldownBarUI.Instance.TargetObject = _character.transform;
-        _rigidBody = _character.GetComponent<Rigidbody2D>();
-        _character.transform.GetChild(0).GetComponent<WeaponController>().IsPlayer = true;
+        if (_character != null)
+        {
+            CooldownBarUI.Instance.TargetObject = _character.transform;
+            _rigidBody = _character.GetComponent<Rigidbody2D>();
+            _character.transform.GetChild(0).GetComponent<WeaponController>().IsPlayer = true;
+        }
     }
 
     private void Update()
@@ -38,7 +44,7 @@ public class CharacterController : ManagerBehaviour
 
     private void FixedUpdate()
     {
-        if (!GameManager.IsGamePaused)
+        if (!GameManager.IsGamePaused && _character != null)
         {
             RotateCharacterOnMousePosition();
             MovementControl();
@@ -71,7 +77,6 @@ public class CharacterController : ManagerBehaviour
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
         float moveVertical = Input.GetAxisRaw("Vertical");
 
-        Debug.Log($"{moveHorizontal}, {moveVertical}");
         Vector2 movement = new(moveHorizontal, moveVertical);
 
         movement = movement.normalized;
@@ -88,10 +93,10 @@ public class CharacterController : ManagerBehaviour
         if (hit.collider != null)
         {
             CharacterDataHolder characterData = hit.collider.GetComponent<CharacterDataHolder>();
-            float distance = Vector3.Distance(characterData.transform.position, _character.transform.position);
+            float distance = Vector3.Distance(characterData.transform.position, 
+                _character ? _character.transform.position: transform.position);
             if (characterData != null && distance <= _possessionRadius)
             {
-                Debug.Log(characterData.name);
                 CharacterSwitch(characterData.gameObject);
             }
             else
@@ -103,14 +108,14 @@ public class CharacterController : ManagerBehaviour
 
     private void CharacterSwitch(GameObject characterData)
     {
+        //Play possession here
+        SymbiotePossessionAnimation();
+
         //reset curret weapon controller before switching up
-        _character.GetComponentInChildren<WeaponController>().IsPlayer = false;
-        _rigidBody.velocity = Vector2.zero;
-        
+        ResetCurrentCharacter();
+
         //switches current character to the new character and reassign all the values
-        _character = characterData;
-        _rigidBody = _character.GetComponent<Rigidbody2D>();
-        _character.GetComponentInChildren<WeaponController>().IsPlayer = true;
+        SwitchToTargetCharacter(characterData);
 
         //Update cooldown bar UI Tracker
         CooldownBarUI.Instance.TargetObject = _character.transform;
@@ -119,9 +124,49 @@ public class CharacterController : ManagerBehaviour
         GetComponent<CameraController>().Character = _character;
 
         //Update all enemy tracking cjaracter
-        EnemyController[] enemyControllerList = FindObjectsOfType<EnemyController>();
-        foreach(EnemyController enemyController in enemyControllerList)
+        UpdateEnemyControllers();
+    }
+
+    private void SymbiotePossessionAnimation()
+    {
+        //Play possession here
+        if (_ftuePrompt)
         {
+            _ftuePrompt.SetActive(false);
+        }
+        _symbiote.SetActive(false);
+    }
+
+    private void ResetCurrentCharacter()
+    {
+        //reset curret weapon controller before switching up
+        if (_character != null)
+        {
+            _character.GetComponentInChildren<WeaponController>().IsPlayer = false;
+            _rigidBody.velocity = Vector2.zero;
+            CooldownBarUI.Instance.ResetCoolDownBarUI();
+            Destroy(_character);
+        }
+    }
+
+    private void SwitchToTargetCharacter(GameObject characterData)
+    {
+        //switches current character to the new character and reassign all the values
+        _character = characterData;
+        _rigidBody = _character.GetComponent<Rigidbody2D>();
+        _character.GetComponentInChildren<WeaponController>().IsPlayer = true;
+    }
+
+    private void UpdateEnemyControllers()
+    {
+        EnemyController[] enemyControllerList = FindObjectsOfType<EnemyController>();
+        foreach (EnemyController enemyController in enemyControllerList)
+        {
+            if (enemyController.WeaponController.IsPlayer)
+            {
+                enemyController.WeaponController.InitData();
+                continue;
+            }
             enemyController.TargetPosition = _character.transform;
         }
     }

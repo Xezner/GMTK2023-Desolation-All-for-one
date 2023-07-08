@@ -15,9 +15,7 @@ public class WeaponController : ManagerBehaviour
 
     private void Start()
     {
-        _attackRate = GetComponentInParent<CharacterDataHolder>().CharacterData.AtkRate;
-        _attackRateHolder = _attackRate;
-        _cooldownBar.fillAmount = 0f;
+        InitData();
     }
 
     private void Update()
@@ -54,6 +52,14 @@ public class WeaponController : ManagerBehaviour
                 }
             }
         }
+    }
+
+    public void InitData()
+    {
+        _attackRate = GetComponentInParent<CharacterDataHolder>().CharacterData.AtkRate;
+        _canAttack = true;
+        _attackRateHolder = _attackRate;
+        _cooldownBar.fillAmount = 0f;
     }
 
 }

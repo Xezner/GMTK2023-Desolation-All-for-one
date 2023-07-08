@@ -34,7 +34,7 @@ public class PossessionRadiusDrawer : MonoBehaviour
 
     private void Update()
     {
-        _spriteRenderer.transform.position = _charactercontroller.Character.transform.position;
+        _spriteRenderer.transform.position = _charactercontroller.Character ? _charactercontroller.Character.transform.position : _charactercontroller.transform.position;
 
         _fadeTimer -= Time.deltaTime;
 
