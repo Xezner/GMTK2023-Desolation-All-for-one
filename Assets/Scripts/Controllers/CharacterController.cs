@@ -34,10 +34,23 @@ public class CharacterController : ManagerBehaviour
     private void Update()
     {
         if (!GameManager.IsGamePaused)
-        {   
+        {
+            bool RadiusIsOn = true;
             if (Input.GetMouseButtonDown(1))
             {
+                _radiusDrawer.StartDrawing();
+                RadiusIsOn = true;
+            }
+            
+           
+
+            if (Input.GetMouseButtonUp(1)&& RadiusIsOn==true)
+            {
                 CheckPossessionRadius();
+            }
+            else
+            {
+                RadiusIsOn = false;
             }
         }
     }
@@ -86,7 +99,7 @@ public class CharacterController : ManagerBehaviour
 
     private void CheckPossessionRadius()
     {
-        _radiusDrawer.StartDrawing();
+        //_radiusDrawer.StartDrawing();
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
 
