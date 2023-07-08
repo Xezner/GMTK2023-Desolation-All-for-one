@@ -6,10 +6,12 @@ public class WeaponController : ManagerBehaviour
     [SerializeField] private Animator _weaponAnimator;
     [SerializeField] private float _attackRate = 1f;
     [SerializeField] private Image _cooldownBar;
-
     private bool _canAttack = true;
     private float _attackRateHolder = 1f;
     private const string NORMAL_ATTACK_TRIGGER = "NormalAttack";
+
+
+    public bool IsPlayer = false;
 
     private void Start()
     {
@@ -19,7 +21,7 @@ public class WeaponController : ManagerBehaviour
 
     private void Update()
     {
-        if (!GameManager.IsGamePaused)
+        if (!GameManager.IsGamePaused && IsPlayer)
         {
             if (!_canAttack)
             {
@@ -41,11 +43,6 @@ public class WeaponController : ManagerBehaviour
                 {
                     _weaponAnimator.SetTrigger(NORMAL_ATTACK_TRIGGER);
                     _canAttack = false;
-                }
-
-                if (Input.GetMouseButtonDown(1))
-                {
-                    Debug.LogError("RIGHT CLICK");
                 }
             }
         }

@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 2199778830362542770}
   - component: {fileID: 2519183880687555595}
   - component: {fileID: 6883942545007502435}
-  - component: {fileID: 7030305731813403483}
+  - component: {fileID: 4011641140664207495}
   m_Layer: 0
-  m_Name: Character
+  m_Name: Character 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.8332292, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -151,7 +151,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &7030305731813403483
+--- !u!114 &4011641140664207495
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccbc2f811234c1948814d969ca60064f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterData: {fileID: 11400000, guid: afe4a6094a30a3a48abdab1ffa2141b9, type: 2}
+  _characterData: {fileID: 11400000, guid: 816c5195bc2d0314fb98a255a31da952, type: 2}
 --- !u!1 &7973759373516895687
 GameObject:
   m_ObjectHideFlags: 0
