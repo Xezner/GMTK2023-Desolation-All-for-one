@@ -1,27 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.U2D.Animation;
 using UnityEngine;
 
 public class CharacterController : ManagerBehaviour
 {
+    [Header("Character Data")]
     [SerializeField] private float _turnRate = 5f;
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _possessionRadius = 3f;
-    [SerializeField] private GameObject _character;
     [SerializeField] private Rigidbody2D _rigidBody;
+
+    [Header("Game Objects")]
     [SerializeField] private PossessionRadiusDrawer _radiusDrawer;
+    [SerializeField] private GameObject _character;
     [SerializeField] private GameObject _symbiote;
     [SerializeField] private GameObject _ftuePrompt;
+
+    private string _playerLayer = "Player";
+    private string _enemyLayer = "Enemy";
     public float PossessionRadius { get { return _possessionRadius; } }
     public GameObject Character { get { return _character; } }
 
     private void Start()
     {
-        TempInit();
+        Debug.Log(gameObject.name);
+        Init();
     }
 
-    private void TempInit()
+    private void Init()
     {
         if (_character != null)
         {
@@ -29,6 +35,7 @@ public class CharacterController : ManagerBehaviour
             _rigidBody = _character.GetComponent<Rigidbody2D>();
             _character.transform.GetChild(0).GetComponent<WeaponController>().IsPlayer = true;
         }
+        UpdateEnemyControllers();
     }
 
     private void Update()
@@ -103,7 +110,7 @@ public class CharacterController : ManagerBehaviour
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
 
-        if (hit.collider != null)
+        if (hit.collider != null && hit.collider.CompareTag("Character") && hit.collider.gameObject != _character)
         {
             CharacterDataHolder characterData = hit.collider.GetComponent<CharacterDataHolder>();
             float distance = Vector3.Distance(characterData.transform.position, 
@@ -146,6 +153,7 @@ public class CharacterController : ManagerBehaviour
         if (_ftuePrompt)
         {
             _ftuePrompt.SetActive(false);
+            GameManager.IsWaitingForFirstPossession = false;
         }
         _symbiote.SetActive(false);
     }
@@ -175,12 +183,18 @@ public class CharacterController : ManagerBehaviour
         EnemyController[] enemyControllerList = FindObjectsOfType<EnemyController>();
         foreach (EnemyController enemyController in enemyControllerList)
         {
-            if (enemyController.WeaponController.IsPlayer)
+            if (_character != null)
             {
-                enemyController.WeaponController.InitData();
-                continue;
+                if (enemyController.WeaponController.IsPlayer)
+                {
+                    enemyController.gameObject.layer = LayerMask.NameToLayer(_playerLayer);
+                    enemyController.WeaponController.InitData();
+                    Destroy(enemyController);
+                    continue;
+                }
             }
-            enemyController.TargetPosition = _character.transform;
+            enemyController.gameObject.layer = LayerMask.NameToLayer(_enemyLayer);
+            enemyController.TargetPosition = _character ? _character.transform : transform;
         }
     }
 }

@@ -20,6 +20,11 @@ public class WeaponController : ManagerBehaviour
 
     private void Update()
     {
+        if (GameManager.IsWaitingForFirstPossession)
+        {
+            return;
+        }
+
         if (!GameManager.IsGamePaused)
         {
             if (!_canAttack)
@@ -57,6 +62,7 @@ public class WeaponController : ManagerBehaviour
     public void InitData()
     {
         _attackRate = GetComponentInParent<CharacterDataHolder>().CharacterData.AtkRate;
+        _cooldownBar = CooldownBarUI.Instance.CooldownBar;
         _canAttack = true;
         _attackRateHolder = _attackRate;
         _cooldownBar.fillAmount = 0f;

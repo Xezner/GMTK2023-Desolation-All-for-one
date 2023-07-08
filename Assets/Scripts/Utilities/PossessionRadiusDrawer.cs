@@ -7,14 +7,14 @@ public class PossessionRadiusDrawer : MonoBehaviour
 {
     [SerializeField] private CharacterController _charactercontroller;
     [SerializeField] private SpriteRenderer _spriteRenderer;
-    private float _radius;
+    [SerializeField] private float _radius;
     private float _fadeDuration = 1f;
     private float _currentAlphaValue;
     private float _fadeTimer;
     public void StartDrawing()
     {
-        _radius = _charactercontroller.PossessionRadius;
-        Vector3 scale = new Vector3(_radius, _radius, 1f);
+        _radius = _charactercontroller.PossessionRadius * 1.65f;
+        Vector3 scale = new Vector3(_radius, _radius, _radius);
         _spriteRenderer.transform.localScale = scale;
         _currentAlphaValue = 0.5f;
         _fadeTimer = _fadeDuration;

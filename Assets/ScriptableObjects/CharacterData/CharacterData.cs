@@ -6,7 +6,7 @@ using UnityEngine;
 public class CharacterData : ScriptableObject
 {
     public GameObject Character;
-    public float Name;
+    public string Name;
     public float HP;
     public float AtkDamage;
     public float AtkRate;
@@ -14,5 +14,11 @@ public class CharacterData : ScriptableObject
     public float Movespeed;
     public float TurnRate;
     public float HealthDegen;
-    public int PossessionGauge;
 }
+
+public enum CharacterType
+{
+    Melee,
+    Ranged
+}
+

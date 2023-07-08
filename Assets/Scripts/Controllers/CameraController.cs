@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraController : ManagerBehaviour
 {
     [SerializeField] private GameObject _character;
     [SerializeField] private Camera _camera;
@@ -13,17 +13,21 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log(gameObject.name);
         GetCharacter();
     }
 
     private void LateUpdate()
     {
-        if (_character != null)
+        if (!GameManager.IsGamePaused)
         {
-            Vector3 targetPosition = _character.transform.position;
-            Vector3 desiredPosition = new Vector3(targetPosition.x, targetPosition.y, -10f);
+            if (_character != null)
+            {
+                Vector3 targetPosition = _character.transform.position;
+                Vector3 desiredPosition = new Vector3(targetPosition.x, targetPosition.y, -10f);
 
-            _camera.transform.position = Vector3.SmoothDamp(_camera.transform.position, desiredPosition, ref _velocity, _smoothTime);
+                _camera.transform.position = Vector3.SmoothDamp(_camera.transform.position, desiredPosition, ref _velocity, _smoothTime);
+            }
         }
     }
 
