@@ -1,35 +1,51 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WeaponController : MonoBehaviour
 {
     [SerializeField] private Animator _weaponAnimator;
+    [SerializeField] private float _attackRate = 1f;
+    [SerializeField] private Image _cooldownBar;
 
-
-    private const string WEAPON_NORMAL_ATTACK = "WeaponNormalAttack";
-
+    private bool _canAttack = true;
+    private float _attackRateHolder = 1f;
     private const string NORMAL_ATTACK_TRIGGER = "NormalAttack";
+
+    private void Start()
+    {
+        _attackRateHolder = _attackRate;
+        _cooldownBar.fillAmount = 0f;
+    }
 
     private void Update()
     {
-        if(IsAnimationPlaying(WEAPON_NORMAL_ATTACK))
+        if (!_canAttack)
         {
-            return;
-        }
+            _attackRateHolder -= Time.deltaTime;
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            _weaponAnimator.SetTrigger(NORMAL_ATTACK_TRIGGER);
-        }
+            _cooldownBar.fillAmount = _attackRateHolder / _attackRate;
 
-        if(Input.GetMouseButtonDown(1))
+            if (_attackRateHolder <= 0f)
+            {
+                
+                _canAttack = true;
+                _attackRateHolder = _attackRate;
+                _cooldownBar.fillAmount = 0f;
+            }
+        }
+        else
         {
-            Debug.LogError("RIGHT CLICK");
+            if (Input.GetMouseButtonDown(0))
+            {
+                _weaponAnimator.SetTrigger(NORMAL_ATTACK_TRIGGER);
+                _canAttack = false;
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                Debug.LogError("RIGHT CLICK");
+            }
         }
     }
 
-    private bool IsAnimationPlaying(string animationName)
-    {
-        AnimatorStateInfo stateInfo = _weaponAnimator.GetCurrentAnimatorStateInfo(0);
-        return stateInfo.IsName(animationName) && stateInfo.normalizedTime < 1f;
-    }
 }
