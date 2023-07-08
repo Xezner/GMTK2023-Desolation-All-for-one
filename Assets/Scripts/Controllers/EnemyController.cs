@@ -5,36 +5,93 @@ using UnityEngine;
 public class EnemyController : ManagerBehaviour
 {
     [SerializeField] private Rigidbody2D _rigidbody2D;
+    [SerializeField] private float _obstacleDetectionRadius = 2f;
     private WeaponController _weaponController;
     private CharacterData _characterData;
     private Transform _targetPosition;
     public Transform TargetPosition { set { _targetPosition = value; } }
-
+    public WeaponController WeaponController { get { return _weaponController; } }
     // Start is called before the first frame update
     void Start()
     {
+        InitSpawn();
+    }
+
+    public void InitSpawn()
+    {
         _weaponController = GetComponentInChildren<WeaponController>();
         _characterData = GetComponentInChildren<CharacterDataHolder>().CharacterData;
-        _targetPosition = FindFirstObjectByType<CharacterController>().Character.transform;
+        var characterController = FindFirstObjectByType<CharacterController>();
+        _targetPosition = characterController.Character ? characterController.Character.transform : characterController.transform;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(_weaponController.IsPlayer)
+        {
+            Destroy(this);
+            return;
+        }
+
         if (!_weaponController.IsPlayer && _targetPosition != null)
         {
-            Debug.Log(gameObject.name + "Is Enemy");
-           
             Vector3 direction = (_targetPosition.position - transform.position).normalized;
             
             float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
-            _rigidbody2D.SetRotation(targetAngle);
+            float currentAngle = Mathf.LerpAngle(_rigidbody2D.rotation, targetAngle, _characterData.TurnRate * Time.deltaTime);
+            _rigidbody2D.SetRotation(currentAngle);
+
+            
+
+            //Vector2 obstacleDetectionForce = ObstacleDetectionForce();
+            //Vector2 enemyDetectionForce = EnemyDetectionForce();
 
             Vector2 desiredVelocity = direction * _characterData.Movespeed;
+            //desiredVelocity += obstacleDetectionForce + enemyDetectionForce;
 
-            // Apply the desired velocity
             _rigidbody2D.velocity = desiredVelocity;
         }
+    }
+
+
+    private Vector2 ObstacleDetectionForce()
+    {
+        Vector2 detectionForce = Vector2.zero;
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, _obstacleDetectionRadius, Vector2.zero);
+
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (hit.collider.CompareTag("Obstacles"))
+            {
+                Vector2 obstacleDirection = new Vector2(transform.position.x, transform.position.y) - hit.point;
+                detectionForce += obstacleDirection.normalized / obstacleDirection.magnitude;
+            }
+        }
+
+        return detectionForce;
+    }
+
+    private Vector2 EnemyDetectionForce()
+    {
+        Vector2 detectionForce = Vector2.zero;
+        EnemyController[] enemies = FindObjectsOfType<EnemyController>();
+
+        foreach (EnemyController enemyController in enemies)
+        {
+            if(enemyController.WeaponController.IsPlayer)
+            {
+                continue;
+            }
+
+            if (enemyController != this && Vector2.Distance(transform.position, enemyController.transform.position) < _obstacleDetectionRadius)
+            {
+                Vector2 separationDirection = transform.position - enemyController.transform.position;
+                detectionForce += separationDirection.normalized / separationDirection.magnitude;
+            }
+        }
+
+        return detectionForce;
     }
 
 
