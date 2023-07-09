@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private Sound[] _musicSounds, _sfxSounds;
     [SerializeField] private AudioSource _musicSource, _sfxSource;
 
+    //done
     private void Awake()
     {
         if(Instance == null)
@@ -24,6 +25,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    //Done
     private void Start()
     {
         PlayMusic("Theme");
