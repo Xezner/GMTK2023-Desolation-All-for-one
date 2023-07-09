@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: ShortSword
   m_EditorClassIdentifier: 
   Character: {fileID: 2587373780839064061, guid: cbc3bac0ef75b2f4bbed8b8d913ff585, type: 3}
-  Name: Boo
+  Name: Pickles
   HP: 100
-  AtkDamage: 5
+  AtkDamage: 20
   AtkRate: 0.8
-  AtkRange: 2
+  AtkRange: 1
   ProjectileSpeed: 0
   ProjectileDuration: 0
   Movespeed: 3.5
   TurnRate: 5
-  HealthDegen: 8
+  HealthDegen: 6
   KnockBack: 5
   CharacterType: 0

@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character: {fileID: 2587373780839064061, guid: 3d59d67843072b24dbae676fdcdee5d2, type: 3}
   Name: Beetle
-  HP: 5
-  AtkDamage: 2
+  HP: 100
+  AtkDamage: 30
   AtkRate: 0.8
   AtkRange: 5
+  ProjectileSpeed: 0
+  ProjectileDuration: 0
   Movespeed: 4
   TurnRate: 5
   HealthDegen: 0

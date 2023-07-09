@@ -14,7 +14,6 @@ public class ProjectileUtil : MonoBehaviour
         playerDuration = duration;
         playerSpeed = speed;
 
-        Debug.Log($"Duration: {duration}, Speed: {speed}");
         _collider.enabled = true;
         StartCoroutine(MoveProjectile(projectile, launchDirection));    
     }

@@ -146,6 +146,10 @@ public class EnemyController : ManagerBehaviour
     {
         if (_characterData.HP <= 0)
         {
+            if (GameManager.PossessionGauge < 5 && _characterData.IsKilled)
+            {
+                GameManager.PossessionGauge++;
+            }
             IsDead = true;
             StartCoroutine(WaitTillDead(gameObject));
         }

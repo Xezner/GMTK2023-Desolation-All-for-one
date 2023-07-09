@@ -51,7 +51,7 @@ public class SpawnManager : ManagerBehaviour
 
     public void CheckWave()
     {
-        if(gameObject.transform.childCount == 2 && WaveCounter != 1 /*&& gameObject.transform.GetChild(0).name == "Player"*/)
+        if(gameObject.transform.childCount <= 2 && WaveCounter != 1 /*&& gameObject.transform.GetChild(0).name == "Player"*/)
         {
             SpawnCharacter();
         }
@@ -88,7 +88,6 @@ public class SpawnManager : ManagerBehaviour
 
             Vector2 spawnPoint = GetSpawnPoint();
             _spawnList[enemyType].Name = _characterNames.NameList[randomIndex];
-            Debug.Log(_spawnList[enemyType].Name);
             var spawn = Instantiate(_spawnList[enemyType].Character, spawnPoint, Quaternion.identity, transform);
             SetCharacterData(spawn, _spawnList[enemyType], _characterNames.NameList[randomIndex]);
         }

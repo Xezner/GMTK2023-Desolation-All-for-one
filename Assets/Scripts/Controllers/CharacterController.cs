@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.U2D.Animation;
 using UnityEngine;
 
 public class CharacterController : ManagerBehaviour
@@ -25,10 +26,12 @@ public class CharacterController : ManagerBehaviour
     public Vector2 MouseDirection = Vector2.zero;
 
 
-    public bool Test = false;
+    public bool GameStart = false;
     //Knowckback
     private float _knockbackDuration = 0.2f;
     public bool IsKnockedBack = false;
+
+    private int minimumLifeforce = 1;
 
     private void Start()
     {
@@ -51,11 +54,18 @@ public class CharacterController : ManagerBehaviour
     {
         if (!GameManager.IsGamePaused && GameManager.IsControllable)
         {
-            if (Input.GetMouseButtonDown(1))
+            if(Input.GetMouseButtonDown(1))
+            {
+                if(GameManager.PossessionGauge < minimumLifeforce)
+                {
+                    Debug.Log("Not enough life force");
+                }
+            }
+            if (Input.GetMouseButtonDown(1) && GameManager.PossessionGauge >= minimumLifeforce)
             {
                 _radiusDrawer.StartDrawing();
             }
-            if (Input.GetMouseButtonUp(1)&& _radiusDrawer.IsRadiusOn)
+            if (Input.GetMouseButtonUp(1) && _radiusDrawer.IsRadiusOn && GameManager.PossessionGauge >= minimumLifeforce)
             {
                 CheckPossessionRadius();
             }
@@ -80,7 +90,6 @@ public class CharacterController : ManagerBehaviour
     {
         if (!GameManager.IsGamePaused && _character != null)
         {
-
             RotateCharacterOnMousePosition();
             if(GameManager.IsControllable)
                 MovementControl();
@@ -163,7 +172,7 @@ public class CharacterController : ManagerBehaviour
     private void CharacterSwitch(GameObject characterData)
     {
         //Play possession here
-        SymbiotePossessionAnimation();
+        SymbiotePossessionAnimation(characterData);
 
         //reset curret weapon controller before switching up
         ResetCurrentCharacter();
@@ -181,25 +190,18 @@ public class CharacterController : ManagerBehaviour
         UpdateEnemyControllers();
     }
 
-    private void SymbiotePossessionAnimation()
+    private void SymbiotePossessionAnimation(GameObject characterData)
     {
-        //Play possession here
-        if (Test)
+        GameStart = false;
+        GameManager.IsControllable = false;
+        GameManager.IsWaitingForFirstPossession = true;
+        GameManager.PossessionGauge -= minimumLifeforce;
+        if(GameManager.PossessionGauge < 0)
         {
-            Debug.Log("FTUE");
-            _ftuePrompt.SetActive(false);
-            GameManager.IsWaitingForFirstPossession = false;
-            _symbiote.SetActive(false);
+            GameManager.PossessionGauge = 0;
         }
-        else
-        {
-            GameManager.IsControllable = false;
-            Debug.Log("NO FTUE");
-            GameManager.IsWaitingForFirstPossession = true;
-            _symbiote.SetActive(true);
-            _symbiote.GetComponent<SymbioteController>().AnimatePossession();
-        }
-
+        _symbiote.SetActive(true);
+        _symbiote.GetComponent<SymbioteController>().AnimatePossession(characterData.GetComponent<CharacterDataHolder>());
     }
 
     private void ResetCurrentCharacter()
@@ -222,8 +224,13 @@ public class CharacterController : ManagerBehaviour
         _rigidBody = _character.GetComponent<Rigidbody2D>();
         _character.GetComponentInChildren<WeaponController>().IsPlayer = true;
         _characterDataHolder = _character.GetComponent<CharacterDataHolder>();
-        _characterDataHolder.HP += 10;
+        _characterDataHolder.IsStartDegen = true;
+        _characterDataHolder.HP += 100;
+        GameManager.IsPossessed = true;
+        GameManager.PlayerHP = _characterDataHolder.HP;
         _characterDataHolder.AtkRate *= 0.7f;
+        _characterDataHolder.AtkDamage += 20f;
+        _moveSpeed = _characterDataHolder.Movespeed + 2f;
     }
 
     private void UpdateEnemyControllers()

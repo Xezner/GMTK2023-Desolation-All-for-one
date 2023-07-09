@@ -47,7 +47,7 @@ public class WeaponController : ManagerBehaviour
             return;
         }    
 
-        if (!GameManager.IsGamePaused)
+        if (!GameManager.IsGamePaused && GameManager.IsPossessed)
         {
             //Check if cooldown is over
             if (!CanAttack)
@@ -120,7 +120,15 @@ public class WeaponController : ManagerBehaviour
     }
     public void DamagePlayer(float damage)
     {
-        if(_characterData.HP > 0)
+        if (_characterData.HP > 0)
+        {
             _characterData.HP -= (int)damage;
+            _characterData.IsKilled = false;
+        }
+
+        if(_characterData.HP <= 0 && IsPlayer)
+        {
+            _characterData.IsKilled = true;
+        }
     }
 }

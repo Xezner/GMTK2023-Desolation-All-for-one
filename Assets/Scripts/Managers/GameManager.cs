@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : ManagerBehaviour
 {
+    [Header("MainMenu")]
+    [SerializeField] private GameObject _mainMenu;
+
     [Header("GameOver")]
     [SerializeField] private GameObject _gameOver;
 
@@ -15,10 +18,15 @@ public class GameManager : ManagerBehaviour
     [Header("Camera")]
     [SerializeField] public Camera Camera;
 
+    private int _minimumLifeforce = 5;
+
     public bool IsGameStart = false;
     public bool IsGamePaused = false;
     public bool IsWaitingForFirstPossession = false;
     public bool IsControllable = true;
+    public bool IsPossessed = false;
+    public int PossessionGauge = 0;
+    public int PlayerHP = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,17 +57,20 @@ public class GameManager : ManagerBehaviour
 
     public void GameStart()
     {
+        _mainMenu.SetActive(false);
         IsGamePaused = false;
         IsWaitingForFirstPossession = false;
         IsControllable = true;
+        PossessionGauge = _minimumLifeforce;
+        IsPossessed = false;
         SpawnManager.Instance.DestroyAll();
         SpawnManager.Instance.WaveCounter = 1;
         SpawnManager.Instance.SpawnCharacter();
         StartCoroutine(ZoomOut());
     }
 
-    public float zoomOutDuration = 1f;
-    public float targetSize = 4f;
+    public float zoomOutDuration = 1.5f;
+    public float targetSize = 4.5f;
 
     private float initialSize;
     private float currentSize;
@@ -87,7 +98,9 @@ public class GameManager : ManagerBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(0);
+        _mainMenu.SetActive(true);
         IsWaitingForFirstPossession = false;
+        IsPossessed = false;
         IsControllable = true;
         FTUEPrompt.SetActive(false);
         _gameOver.SetActive(false);

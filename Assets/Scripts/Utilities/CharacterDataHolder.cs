@@ -7,7 +7,8 @@ public class CharacterDataHolder : ManagerBehaviour
     [SerializeField] private CharacterData _characterData;
     [SerializeField] private Animator _animator;
 
-    private bool _startDegen = false;
+    public bool IsStartDegen = false;
+    public bool IsKilled = false;
     private float timer = 0f;
     public CharacterData CharacterData { get { return _characterData; } }
 
@@ -33,25 +34,24 @@ public class CharacterDataHolder : ManagerBehaviour
         AtkRange = characterData.AtkRange;
         ProjectileSpeed = characterData.ProjectileSpeed;
         ProjectileDuration = characterData.ProjectileDuration;
-        Movespeed = characterData.Movespeed;
+        Movespeed = characterData.Movespeed - 1f;
         TurnRate = characterData.TurnRate;
         HealthDegen = characterData.HealthDegen;
         KnockBack = characterData.KnockBack;
         CharacterType = characterData.CharacterType;
 
         GetComponentInChildren<WeaponController>().InitData();
-
-        _startDegen = true;
     }
 
     public void Update()
     {
-        if(_startDegen && HP > 0 && !GameManager.IsGamePaused && !GameManager.IsWaitingForFirstPossession)
+        if(GameManager.IsPossessed && HP > 0 && !GameManager.IsGamePaused && !GameManager.IsWaitingForFirstPossession)
         {
             timer += Time.deltaTime;
             if(timer >= 1f)
             {
                 HP -= HealthDegen;
+                IsKilled = false;
                 timer = 0;
             }
         }

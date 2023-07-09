@@ -15,11 +15,11 @@ MonoBehaviour:
   Character: {fileID: 2587373780839064061, guid: 3d59d67843072b24dbae676fdcdee5d2, type: 3}
   Name: Boo
   HP: 100
-  AtkDamage: 5
+  AtkDamage: 30
   AtkRate: 1.4
   AtkRange: 5
   ProjectileSpeed: 12
-  ProjectileDuration: 0.5
+  ProjectileDuration: 0.375
   Movespeed: 4
   TurnRate: 5
   HealthDegen: 8
