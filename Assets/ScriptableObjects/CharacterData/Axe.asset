@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Axe
   m_EditorClassIdentifier: 
   Character: {fileID: 2587373780839064061, guid: 7ae1e2a00c1ed624ca007d795a967596, type: 3}
-  Name: Freckles
+  Name: 
   HP: 100
   AtkDamage: 3
   AtkRate: 3
@@ -22,6 +22,6 @@ MonoBehaviour:
   ProjectileDuration: 0
   Movespeed: 3
   TurnRate: 5
-  HealthDegen: 12
+  HealthDegen: 6
   KnockBack: 8
   CharacterType: 0

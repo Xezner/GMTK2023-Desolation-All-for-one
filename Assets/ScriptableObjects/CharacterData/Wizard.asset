@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wizard
   m_EditorClassIdentifier: 
   Character: {fileID: 2587373780839064061, guid: 3d59d67843072b24dbae676fdcdee5d2, type: 3}
-  Name: Sherlock
+  Name: Boo
   HP: 100
   AtkDamage: 5
   AtkRate: 1.4
@@ -22,6 +22,6 @@ MonoBehaviour:
   ProjectileDuration: 0.5
   Movespeed: 4
   TurnRate: 5
-  HealthDegen: 16
+  HealthDegen: 8
   KnockBack: 4
   CharacterType: 1

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ShortSword
   m_EditorClassIdentifier: 
   Character: {fileID: 2587373780839064061, guid: cbc3bac0ef75b2f4bbed8b8d913ff585, type: 3}
-  Name: Beef
+  Name: Boo
   HP: 100
   AtkDamage: 5
   AtkRate: 0.8
@@ -22,6 +22,6 @@ MonoBehaviour:
   ProjectileDuration: 0
   Movespeed: 3.5
   TurnRate: 5
-  HealthDegen: 16
+  HealthDegen: 8
   KnockBack: 5
   CharacterType: 0

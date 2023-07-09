@@ -17,7 +17,6 @@ public class CharacterNames : ScriptableObject
         NameList = new();
         foreach(string name in split)
         {
-            Debug.Log(name);
             NameList.Add(name.Trim());
         }
     }
