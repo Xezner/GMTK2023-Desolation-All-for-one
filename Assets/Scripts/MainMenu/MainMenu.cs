@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] private GameObject _options, _mainMenu;
+    [SerializeField] private GameObject _options, _mainMenu, _camera;
 
     public void NewGame()
     {

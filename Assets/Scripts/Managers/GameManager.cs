@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class GameManager : ManagerBehaviour
 {
-
-
+    public bool IsGameStart = false;
     public bool IsGamePaused = false;
     public bool IsWaitingForFirstPossession = false;
 
@@ -36,6 +35,7 @@ public class GameManager : ManagerBehaviour
 
     public void GameStart()
     {
+        IsGameStart = true;
         IsGamePaused = false;
         IsWaitingForFirstPossession = false;
         Debug.Log("HERE");
