@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 4701638393356158720}
   - component: {fileID: 5750157201981486047}
   - component: {fileID: 39012278653693774}
+  - component: {fileID: 1190095744420709016}
   m_Layer: 0
   m_Name: Tip
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93,7 +94,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2370183535907030419}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -132,8 +133,23 @@ PolygonCollider2D:
     m_Paths:
     - - {x: 0, y: 0.5773587}
       - {x: -0.5, y: -0.28866667}
+      - {x: -0.49679866, y: -0.7377582}
+      - {x: 0.48274025, y: -0.7418718}
       - {x: 0.5, y: -0.28866667}
   m_UseDelaunayMesh: 0
+--- !u!114 &1190095744420709016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2370183535907030419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e963955f60bd414dac2347b085f0c2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponController: {fileID: 2434949694100493714}
 --- !u!1 &2686832567234174938
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,7 +182,7 @@ Transform:
   m_Children:
   - {fileID: 4701638393356158720}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2434949694100493714
 MonoBehaviour:
@@ -181,8 +197,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponAnimator: {fileID: 2422569982155424158}
-  _attackRate: 1
   _cooldownBar: {fileID: 0}
+  _weaponCollisionDetection: {fileID: 1190095744420709016}
   IsPlayer: 0
 --- !u!95 &2422569982155424158
 Animator:

@@ -6,22 +6,27 @@ public class EnemyController : ManagerBehaviour
 {
     [SerializeField] private Rigidbody2D _rigidbody2D;
     [SerializeField] private float _obstacleDetectionRadius = 2f;
+    [SerializeField] private GameObject _collisionDetector;
     private WeaponController _weaponController;
-    private CharacterData _characterData;
+    private CharacterDataHolder _characterData;
     private Transform _targetPosition;
     public Transform TargetPosition { set { _targetPosition = value; } }
     public WeaponController WeaponController { get { return _weaponController; } }
-    // Start is called before the first frame update
+    public GameObject CollisionDetector { get { return _collisionDetector; } }
+
+    //Knowckback
+    private float _knockbackDuration = 0.2f;
+    public bool IsKnockedBack = false;
+    public bool IsDead = false;
     void Start()
     {
-        Debug.Log(gameObject.name);
         InitSpawn();
     }
 
     public void InitSpawn()
     {
         _weaponController = GetComponentInChildren<WeaponController>();
-        _characterData = GetComponentInChildren<CharacterDataHolder>().CharacterData;
+        _characterData = GetComponentInChildren<CharacterDataHolder>();
         var characterController = FindFirstObjectByType<CharacterController>();
         _targetPosition = characterController.Character ? characterController.Character.transform : characterController.transform;
     }
@@ -43,18 +48,43 @@ public class EnemyController : ManagerBehaviour
 
         if (_weaponController.IsPlayer)
         {
+            Destroy(_collisionDetector);
+            return;
+        }
+
+        BasicEnemyNavigation();
+
+        CheckHP();
+    }
+
+    private void BasicEnemyNavigation()
+    {
+        if(IsKnockedBack)
+        {
+            _knockbackDuration -= Time.deltaTime;
+            if(_knockbackDuration <= 0f)
+            {
+                if (IsDead)
+                {
+                    return;
+                }
+                IsKnockedBack = false;
+                _collisionDetector.SetActive(true);
+                Debug.Log("Done Knockback");
+            }
             return;
         }
 
         if (!_weaponController.IsPlayer && _targetPosition != null)
         {
-            Vector3 direction = (_targetPosition.position - transform.position).normalized;
+            Vector3 direction = (_targetPosition.position - transform.position);
+            float distance = direction.magnitude;
+            Debug.Log($"Distance: {distance}");
+            direction = direction.normalized;
 
             float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
             float currentAngle = Mathf.LerpAngle(_rigidbody2D.rotation, targetAngle, _characterData.TurnRate * Time.deltaTime);
             _rigidbody2D.SetRotation(currentAngle);
-
-
 
             //Vector2 obstacleDetectionForce = ObstacleDetectionForce();
             //Vector2 enemyDetectionForce = EnemyDetectionForce();
@@ -62,7 +92,14 @@ public class EnemyController : ManagerBehaviour
             Vector2 desiredVelocity = direction * _characterData.Movespeed;
             //desiredVelocity += obstacleDetectionForce + enemyDetectionForce;
 
-            _rigidbody2D.velocity = desiredVelocity;
+            if(distance <= _characterData.AtkRange)
+            {
+                _rigidbody2D.velocity = Vector2.zero;
+            }
+            else
+            {
+                _rigidbody2D.velocity = desiredVelocity;
+            }
         }
     }
 
@@ -106,9 +143,50 @@ public class EnemyController : ManagerBehaviour
         return detectionForce;
     }
 
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void CheckHP()
     {
-        _rigidbody2D.velocity = Vector2.zero;
+        if (_characterData.HP <= 0)
+        {
+            IsDead = true;
+            StartCoroutine(WaitTillDead(gameObject));
+        }
+        else
+        {
+            IsDead = false;
+        }
+    }
+
+    public void ApplyKnockBackForce(Vector2 direction, float knockbackMagnitude)
+    {
+        _collisionDetector.SetActive(false);
+        IsKnockedBack = true;
+        _knockbackDuration = 0.2f;
+        _rigidbody2D.AddForce(direction.normalized * knockbackMagnitude, ForceMode2D.Impulse);
+    }
+
+
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    _rigidbody2D.velocity = Vector2.zero;         
+        
+    //    if(collision.gameObject.CompareTag("Weapon"))
+    //    {
+    //        Debug.Log("weapon hit");
+    //    }
+    //}
+
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Weapon"))
+    //    {
+    //        Debug.Log("weapon hit");
+    //    }
+    //}
+
+
+    IEnumerator WaitTillDead(GameObject character)
+    {
+        yield return new WaitForSeconds(1f);
+        Destroy(character);
     }
 }

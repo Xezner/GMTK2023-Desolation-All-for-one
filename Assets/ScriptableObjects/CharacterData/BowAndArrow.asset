@@ -10,14 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92132b292ed5ec6408dfac1d11dabc6e, type: 3}
-  m_Name: Character2
+  m_Name: BowAndArrow
   m_EditorClassIdentifier: 
-  Character: {fileID: 2587373780839064061, guid: 7ae1e2a00c1ed624ca007d795a967596, type: 3}
-  HP: 10
-  AtkDamage: 1
-  AtkRate: 1
-  AtkRange: 1
-  Movespeed: 3
+  Character: {fileID: 2587373780839064061, guid: 3d59d67843072b24dbae676fdcdee5d2, type: 3}
+  Name: Beetle
+  HP: 5
+  AtkDamage: 2
+  AtkRate: 0.8
+  AtkRange: 5
+  Movespeed: 4
   TurnRate: 5
   HealthDegen: 0
-  PossessionGauge: 0
+  KnockBack: 3
+  CharacterType: 1
