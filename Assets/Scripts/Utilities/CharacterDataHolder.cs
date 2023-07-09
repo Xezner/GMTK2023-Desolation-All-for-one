@@ -45,6 +45,11 @@ public class CharacterDataHolder : ManagerBehaviour
 
     public void Update()
     {
+        if(IsKilled)
+        {
+            return;
+        }
+
         if(GameManager.IsPossessed && HP > 0 && !GameManager.IsGamePaused && !GameManager.IsWaitingForFirstPossession)
         {
             timer += Time.deltaTime;

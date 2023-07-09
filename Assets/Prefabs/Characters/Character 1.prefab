@@ -134,7 +134,7 @@ CircleCollider2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 0
+  m_LayerOverridePriority: 10
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -167,11 +167,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterData: {fileID: 11400000, guid: 816c5195bc2d0314fb98a255a31da952, type: 2}
   _animator: {fileID: 0}
+  IsStartDegen: 0
+  IsKilled: 0
   Name: 
   HP: 0
   AtkDamage: 0
   AtkRate: 0
   AtkRange: 0
+  ProjectileSpeed: 0
+  ProjectileDuration: 0
   Movespeed: 0
   TurnRate: 0
   HealthDegen: 0
@@ -204,9 +208,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2888453275547308176}
   - component: {fileID: 1883230714874819780}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ObstacleCollission
-  m_TagString: Untagged
+  m_TagString: Obstacles
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -241,8 +245,8 @@ CircleCollider2D:
     m_Bits: 640
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
-  m_LayerOverridePriority: 0
+    m_Bits: 68
+  m_LayerOverridePriority: -10
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295

@@ -126,9 +126,12 @@ public class WeaponController : ManagerBehaviour
             _characterData.IsKilled = false;
         }
 
-        if(_characterData.HP <= 0 && IsPlayer)
+        if(_characterData.HP <= 0 && !IsPlayer)
         {
+            Debug.Log("HELLO");
             _characterData.IsKilled = true;
         }
+
+        Debug.Log($"Isplayer: {IsPlayer}, Is killed: {_characterData.IsKilled}, HP {_characterData.HP}");
     }
 }

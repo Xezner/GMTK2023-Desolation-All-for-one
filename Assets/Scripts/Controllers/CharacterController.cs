@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.U2D.Animation;
 using UnityEngine;
 
 public class CharacterController : ManagerBehaviour
@@ -152,7 +151,7 @@ public class CharacterController : ManagerBehaviour
         //_radiusDrawer.StartDrawing();
         Vector2 mousePosition = GameManager.Camera.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
-
+        Debug.Log(hit.collider.tag + "," + hit.collider.gameObject.name);
         if (hit.collider != null && hit.collider.CompareTag("Character") && hit.collider.gameObject != _character)
         {
             CharacterDataHolder characterData = hit.collider.GetComponent<CharacterDataHolder>();

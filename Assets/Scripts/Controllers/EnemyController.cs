@@ -144,16 +144,18 @@ public class EnemyController : ManagerBehaviour
 
     private void CheckHP()
     {
-        if (_characterData.HP <= 0)
+        if (_characterData.HP <= 0 && !IsDead)
         {
+            Debug.Log($"ENEMY DEAD: {gameObject.name}, Iskilled: {_characterData.IsKilled}");
             if (GameManager.PossessionGauge < 5 && _characterData.IsKilled)
             {
                 GameManager.PossessionGauge++;
+                _characterData.IsKilled = false;
             }
             IsDead = true;
             StartCoroutine(WaitTillDead(gameObject));
         }
-        else
+        else if (_characterData.HP > 0)
         {
             IsDead = false;
         }
