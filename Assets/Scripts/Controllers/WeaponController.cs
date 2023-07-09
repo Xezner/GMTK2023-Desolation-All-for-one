@@ -99,7 +99,7 @@ public class WeaponController : ManagerBehaviour
         CanAttack = true;
         _attackRateHolder = _attackRate;
         _cooldownBar.fillAmount = 0f;
-        _weaponAnimator.SetBool("IsDead", false);
+        _weaponAnimator.ResetTrigger("IsDead");
     }
 
 
