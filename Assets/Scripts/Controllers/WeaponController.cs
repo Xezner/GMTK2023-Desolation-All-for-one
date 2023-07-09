@@ -83,6 +83,16 @@ public class WeaponController : ManagerBehaviour
                 if (Input.GetMouseButtonDown(0) || !IsPlayer)
                 {
                     _weaponAnimator.SetTrigger(NORMAL_ATTACK_TRIGGER);
+                    //Detect if Melee or Range
+                    if (CharacterData.CharacterType == CharacterType.Melee)
+                    {
+                        SoundManager.PlaySoundEffect("melee", false, "sword");
+                    }
+                    else
+                    {
+                        SoundManager.PlaySoundEffect("range", false, "magic");
+                    }
+
                     CanAttack = false;
                 }
             }
@@ -113,6 +123,7 @@ public class WeaponController : ManagerBehaviour
             projectile.transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(launchDirection.y, launchDirection.x) * Mathf.Rad2Deg - 90f);
             projectile.WeaponController = this;
             projectile.StartProjectileCoroutine(projectile.gameObject, launchDirection, _projectileDuration, _projectileSpeed);
+            SoundManager.PlaySoundEffect("range");
         }
         else
         {
@@ -137,6 +148,7 @@ public class WeaponController : ManagerBehaviour
         {
             Debug.Log("HELLO");
             _characterData.IsKilled = true;
+            
         }
 
         Debug.Log($"Isplayer: {IsPlayer}, Is killed: {_characterData.IsKilled}, HP {_characterData.HP}");

@@ -5,8 +5,14 @@ using UnityEngine;
 public class ManagerBehaviour : MonoBehaviour
 {
     protected CachedComponent<GameManager> _gameManager = new();
+    protected CachedComponent<SoundManager> _soundManager = new();
     protected GameManager GameManager
     {
         get { return _gameManager.Instance(this); }
+    }
+
+    protected SoundManager SoundManager
+    {
+        get { return _soundManager.Instance(this); }
     }
 }

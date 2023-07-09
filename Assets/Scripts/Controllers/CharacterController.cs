@@ -16,6 +16,7 @@ public class CharacterController : ManagerBehaviour
     [SerializeField] private GameObject _character;
     [SerializeField] private GameObject _symbiote;
     [SerializeField] private GameObject _ftuePrompt;
+    //[SerializeField] private SoundManager sm;
 
     private string _playerLayer = "Player";
     private string _enemyLayer = "Enemy";
@@ -47,6 +48,8 @@ public class CharacterController : ManagerBehaviour
             _character.transform.GetChild(0).GetComponent<WeaponController>().IsPlayer = true;
         }
         UpdateEnemyControllers();
+        
+
     }
 
     private void Update()
@@ -173,6 +176,7 @@ public class CharacterController : ManagerBehaviour
     {
         //Play possession here
         SymbiotePossessionAnimation(characterData);
+        SoundManager.PlaySoundEffect("possession");
 
         //reset curret weapon controller before switching up
         ResetCurrentCharacter();
