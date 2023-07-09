@@ -45,6 +45,7 @@ public class WeaponCollisionDetection : MonoBehaviour
                 Vector2 hitDirection = enemyPosition - playerPosition;
 
                 FindAnyObjectByType<CharacterController>().ApplyKnockBack(hitDirection, _weaponController.CharacterData.KnockBack);
+                SoundManager.sm.PlaySoundEffect("range", true, "magic");
                 DestroyProjectile();
             }
             else

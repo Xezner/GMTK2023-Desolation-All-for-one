@@ -47,10 +47,16 @@ public class CharacterDataHolder : ManagerBehaviour
         GetComponentInChildren<WeaponController>().InitData();
     }
 
+    public void Start()
+    {
+        _healthOverlay = GameObject.FindGameObjectWithTag("HealthOverlay");
+    }
+
     public void Update()
     {
         if(IsKilled)
         {
+            _healthOverlay.transform.GetChild(0).gameObject.SetActive(false);
             return;
         }
 
@@ -60,6 +66,10 @@ public class CharacterDataHolder : ManagerBehaviour
             if(timer >= 1f)
             {
                 HP -= HealthDegen;
+                //Enable the Screen Effect
+                _healthOverlay.transform.GetChild(0).gameObject.SetActive(true);
+
+          
                 IsKilled = false;
                 timer = 0;
             }

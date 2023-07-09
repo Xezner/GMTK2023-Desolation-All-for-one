@@ -1801,7 +1801,7 @@ Transform:
   - {fileID: 2433546068062797504}
   - {fileID: 7577254841484830788}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4035299577317750987
 MonoBehaviour:
@@ -2130,6 +2130,14 @@ PrefabInstance:
       propertyPath: musicOptionText
       value: 
       objectReference: {fileID: 5023965902182502502}
+    - target: {fileID: 3978734442189896321, guid: 13ffb09dff629064aa91cba41c80ec8d, type: 3}
+      propertyPath: magicProjectileHit.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3978734442189896321, guid: 13ffb09dff629064aa91cba41c80ec8d, type: 3}
+      propertyPath: magicProjectileHit.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: c2ae868cfae70e44a97e85537b4642da, type: 3}
     - target: {fileID: 9150478504905560970, guid: 13ffb09dff629064aa91cba41c80ec8d, type: 3}
       propertyPath: m_Name
       value: SoundManager

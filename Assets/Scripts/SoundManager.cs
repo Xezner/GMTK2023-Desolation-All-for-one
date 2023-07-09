@@ -7,7 +7,7 @@ using System;
 using TMPro;
 using UnityEngine.UI;
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : ManagerBehaviour
 {
     public static SoundManager sm;
 
@@ -80,13 +80,13 @@ public class SoundManager : MonoBehaviour
         }
 
         //Sound Effect when striking with Melee or firing in Range
-        if (actionType == actionTypes.melee)
+        if (actionType == actionTypes.melee && isEnemyHit != true)
         {
             sfxSource.PlayOneShot(meleeWeapons[UnityEngine.Random.Range(0, 3)]);
             Debug.Log("Weapon is Swinging " + sfxSource.isPlaying);
             return true;
         }
-        else if (actionType == actionTypes.range)
+        else if (actionType == actionTypes.range && isEnemyHit != true)
         {
             sfxSource.PlayOneShot(magic[UnityEngine.Random.Range(0, 3)]);
             Debug.Log("Magic Missile is Firing " + sfxSource.isPlaying);
