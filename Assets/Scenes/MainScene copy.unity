@@ -675,7 +675,10 @@ PrefabInstance:
       objectReference: {fileID: 1470597370}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 319974744470177165, guid: 2e7d79c7b76294345ab7f121ecfa6db5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1889142892}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e7d79c7b76294345ab7f121ecfa6db5, type: 3}
 --- !u!114 &516674107 stripped
@@ -692,6 +695,11 @@ MonoBehaviour:
 --- !u!1 &516674108 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4138064406424055561, guid: 2e7d79c7b76294345ab7f121ecfa6db5, type: 3}
+  m_PrefabInstance: {fileID: 516674106}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &516674109 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 319974744470177165, guid: 2e7d79c7b76294345ab7f121ecfa6db5, type: 3}
   m_PrefabInstance: {fileID: 516674106}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &569447353
@@ -1995,6 +2003,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ftuePrompt: {fileID: 516674108}
+  _animator: {fileID: 0}
 --- !u!58 &1426811234
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3008,6 +3017,97 @@ Transform:
   m_Father: {fileID: 118402230}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1889142891
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1889142892}
+  - component: {fileID: 1889142895}
+  - component: {fileID: 1889142894}
+  - component: {fileID: 1889142893}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1889142892
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889142891}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.010052, y: 0.010052, z: 0.010052}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 516674109}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1889142893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889142891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c8f74938e7769b4c98f8051b758519d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ImageFill: {fileID: 1889142894}
+  GuageAmount: 5
+--- !u!114 &1889142894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889142891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 75dd4a0ecce20cd4994165f9be840e28, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 1
+  m_FillAmount: 0
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1889142895
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889142891}
+  m_CullTransparentMesh: 1
 --- !u!1 &2106394435
 GameObject:
   m_ObjectHideFlags: 0
@@ -3041,6 +3141,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _charactercontroller: {fileID: 2106394438}
   _spriteRenderer: {fileID: 479845063}
+  _radius: 0
+  IsRadiusOn: 0
 --- !u!114 &2106394437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3071,11 +3173,15 @@ MonoBehaviour:
   _turnRate: 5
   _moveSpeed: 5
   _possessionRadius: 5
-  _character: {fileID: 0}
   _rigidBody: {fileID: 0}
+  _characterDataHolder: {fileID: 0}
   _radiusDrawer: {fileID: 2106394436}
+  _character: {fileID: 0}
   _symbiote: {fileID: 1426811232}
   _ftuePrompt: {fileID: 516674108}
+  MouseDirection: {x: 0, y: 0}
+  Test: 0
+  IsKnockedBack: 0
 --- !u!4 &2106394439
 Transform:
   m_ObjectHideFlags: 0
