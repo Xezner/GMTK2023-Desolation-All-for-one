@@ -23,7 +23,6 @@ public class CooldownBarUI : ManagerBehaviour
 
     private void Start()
     {
-        Debug.Log(gameObject.name);
         _uiRectTransform = GetComponent<RectTransform>();
     }
 
@@ -49,7 +48,7 @@ public class CooldownBarUI : ManagerBehaviour
 
     public void ResetCoolDownBarUI()
     {
-        Debug.Log("HERE");
+        //Debug.Log("HERE");
         _cooldownBar.fillAmount = 0f;
     }
 }

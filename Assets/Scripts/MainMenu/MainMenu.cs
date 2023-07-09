@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : ManagerBehaviour
 {
     [SerializeField] private GameObject _options, _mainMenu, _camera;
 
     public void NewGame()
     {
-        SceneManager.LoadSceneAsync("DialogueScene");
+        SceneManager.LoadSceneAsync(1);
     }
 
     public void Options()

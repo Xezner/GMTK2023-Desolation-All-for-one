@@ -7,13 +7,15 @@ public class CharacterData : ScriptableObject
 {
     public GameObject Character;
     public string Name;
-    public float HP;
+    public int HP;
     public float AtkDamage;
     public float AtkRate;
     public float AtkRange;
     public float Movespeed;
     public float TurnRate;
-    public float HealthDegen;
+    public int HealthDegen;
+    public float KnockBack;
+    public CharacterType CharacterType;
 }
 
 public enum CharacterType

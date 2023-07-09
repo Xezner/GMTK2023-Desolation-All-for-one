@@ -13,7 +13,7 @@ public class CameraController : ManagerBehaviour
 
     private void Start()
     {
-        Debug.Log(gameObject.name);
+        _camera = GameManager.Camera;
         GetCharacter();
     }
 

@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -17,18 +19,39 @@ public class SpawnManager : ManagerBehaviour
     private float _playerNoSpawnRadius = 10f;
     private Transform _characterController;
 
-    private int _waveCounter;
+    public int WaveCounter;
+
+    public static SpawnManager Instance;
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+    }
+
     void Start()
     {
-        _waveCounter = 1;
+        _characterNames.Start();
+        WaveCounter = 1;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (!GameManager.IsGamePaused)
+        {
+            CheckWave();
+        }
     }
 
+    public void CheckWave()
+    {
+        if(gameObject.transform.childCount == 2 && WaveCounter != 1 /*&& gameObject.transform.GetChild(0).name == "Player"*/)
+        {
+            SpawnCharacter();
+        }
+    }
     
     public void CleanSpawn()
     {
@@ -40,36 +63,45 @@ public class SpawnManager : ManagerBehaviour
         }
     }
 
+    public void DestroyAll()
+    {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
     public void SpawnCharacter()
     {
-        //CleanSpawn();
-
-        Debug.Log("HELLO");
-        int spawnNumber = _waveCounter == 1 ? 5 : Random.Range(5, 11);
+        int spawnNumber = WaveCounter == 1 ? 5 : Random.Range(5, 11);
         for(int i = 0; i < spawnNumber; i++)
         {
-            int enemyType = Random.Range(0, 2);
+            int enemyType = Random.Range(0, _spawnList.Count);
             int randomIndex = Random.Range(0, _characterNames.NameList.Count);
 
             var controller = FindObjectOfType<CharacterController>();
             _characterController = controller.Character ? controller.Character.transform : controller.transform;
 
             Vector2 spawnPoint = GetSpawnPoint();
-
             _spawnList[enemyType].Name = _characterNames.NameList[randomIndex];
-            Instantiate(_spawnList[enemyType].Character, spawnPoint, Quaternion.identity, transform);
+            Debug.Log(_spawnList[enemyType].Name);
+            var spawn = Instantiate(_spawnList[enemyType].Character, spawnPoint, Quaternion.identity, transform);
+            SetCharacterData(spawn, _spawnList[enemyType], _characterNames.NameList[randomIndex]);
         }
-
-        _waveCounter++;
+        WaveCounter++;
     }
 
+    public void SetCharacterData(GameObject spawn, CharacterData characterData, string name)
+    {
+        spawn.gameObject.GetComponent<CharacterDataHolder>().AssignStats(characterData, name);
+    }
 
     private Vector2 GetSpawnPoint()
     {
         Vector2 spawnPoint = Vector2.zero;
         for (int i = 0; i <= 10; i++)
         {
-            _spawnRadius = _waveCounter == 1 ? (int)_playerNoSpawnRadius + 5 : 30;
+            _spawnRadius = WaveCounter == 1 ? (int)_playerNoSpawnRadius + 5 : 30;
             int randomizedRadius = Random.Range((int)_playerNoSpawnRadius, _spawnRadius);
             
             Vector2 randomSpawnPoint = Random.insideUnitCircle.normalized * randomizedRadius;

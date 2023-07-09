@@ -9,10 +9,4 @@ public class ManagerBehaviour : MonoBehaviour
     {
         get { return _gameManager.Instance(this); }
     }
-
-    protected CachedComponent<SpawnManager> _spawnManager = new();
-    protected SpawnManager SpawnManager
-    {
-        get { return _spawnManager.Instance(this); }
-    }
 }

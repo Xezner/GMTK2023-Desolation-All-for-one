@@ -11,8 +11,10 @@ public class PossessionRadiusDrawer : MonoBehaviour
     private float _fadeDuration = 1f;
     private float _currentAlphaValue;
     private float _fadeTimer;
+    public bool IsRadiusOn = false;
     public void StartDrawing()
     {
+        IsRadiusOn = true;
         _radius = _charactercontroller.PossessionRadius * 1.65f;
         Vector3 scale = new Vector3(_radius, _radius, _radius);
         _spriteRenderer.transform.localScale = scale;
@@ -43,6 +45,11 @@ public class PossessionRadiusDrawer : MonoBehaviour
             // Calculate the current alpha value based on the fade timer
             float targetAlpha = (_fadeTimer / _fadeDuration) * _currentAlphaValue;
             SetAlpha(targetAlpha);
+        }
+
+        if(_fadeTimer <= 0f)
+        {
+            IsRadiusOn = false;
         }
     }
 

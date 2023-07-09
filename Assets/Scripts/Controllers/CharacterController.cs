@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,7 @@ public class CharacterController : ManagerBehaviour
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _possessionRadius = 3f;
     [SerializeField] private Rigidbody2D _rigidBody;
-
+    [SerializeField]private CharacterDataHolder _characterDataHolder;
     [Header("Game Objects")]
     [SerializeField] private PossessionRadiusDrawer _radiusDrawer;
     [SerializeField] private GameObject _character;
@@ -18,17 +19,25 @@ public class CharacterController : ManagerBehaviour
 
     private string _playerLayer = "Player";
     private string _enemyLayer = "Enemy";
+    public Rigidbody2D RigidBody { get { return _rigidBody; } }
     public float PossessionRadius { get { return _possessionRadius; } }
     public GameObject Character { get { return _character; } }
+    public Vector2 MouseDirection = Vector2.zero;
+
+
+    public bool Test = false;
+    //Knowckback
+    private float _knockbackDuration = 0.2f;
+    public bool IsKnockedBack = false;
 
     private void Start()
     {
-        Debug.Log(gameObject.name);
         Init();
     }
 
     private void Init()
     {
+        _ftuePrompt = GameManager.FTUEPrompt;
         if (_character != null)
         {
             CooldownBarUI.Instance.TargetObject = _character.transform;
@@ -40,25 +49,30 @@ public class CharacterController : ManagerBehaviour
 
     private void Update()
     {
-        if (!GameManager.IsGamePaused)
+        if (!GameManager.IsGamePaused && GameManager.IsControllable)
         {
-            bool RadiusIsOn = true;
             if (Input.GetMouseButtonDown(1))
             {
                 _radiusDrawer.StartDrawing();
-                RadiusIsOn = true;
             }
-            
-           
-
-            if (Input.GetMouseButtonUp(1)&& RadiusIsOn==true)
+            if (Input.GetMouseButtonUp(1)&& _radiusDrawer.IsRadiusOn)
             {
                 CheckPossessionRadius();
             }
-            else
+
+            if (_character != null)
             {
-                RadiusIsOn = false;
+                CheckHP();
             }
+        }
+    }
+
+    private void CheckHP()
+    {
+        if(_characterDataHolder.HP <= 0)
+        {
+            Debug.Log("DEAD");
+            GameManager.GameOverScreen();
         }
     }
 
@@ -66,8 +80,10 @@ public class CharacterController : ManagerBehaviour
     {
         if (!GameManager.IsGamePaused && _character != null)
         {
+
             RotateCharacterOnMousePosition();
-            MovementControl();
+            if(GameManager.IsControllable)
+                MovementControl();
         }
     }
 
@@ -77,13 +93,13 @@ public class CharacterController : ManagerBehaviour
         Vector3 screenMousePosition = Input.mousePosition;
 
         //mouse position on world
-        Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(screenMousePosition);
+        Vector3 worldMousePosition = GameManager.Camera.ScreenToWorldPoint(screenMousePosition);
         worldMousePosition.z = 0f;
 
         //normalize the direction to get a value between 0 and 1
         Vector3 direction = worldMousePosition - _character.transform.position;
         direction.Normalize();
-
+        MouseDirection = direction;
         //angle of rotation - 90f to get the top part of the screen as the initial rotation
         float angleRotation = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
 
@@ -94,6 +110,17 @@ public class CharacterController : ManagerBehaviour
 
     private void MovementControl()
     {
+        if (IsKnockedBack)
+        {
+            _knockbackDuration -= Time.deltaTime;
+            if (_knockbackDuration <= 0f)
+            {
+                IsKnockedBack = false;
+                Debug.Log("Done Knockback");
+            }
+            return;
+        }
+
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
         float moveVertical = Input.GetAxisRaw("Vertical");
 
@@ -104,10 +131,17 @@ public class CharacterController : ManagerBehaviour
         _rigidBody.velocity = movement * _moveSpeed;
     }
 
+    public void ApplyKnockBack(Vector2 direction, float knockbackMagnitude)
+    {
+        IsKnockedBack = true;
+        _knockbackDuration = 0.2f;
+        _rigidBody.AddForce(direction.normalized * knockbackMagnitude, ForceMode2D.Impulse);
+    }
+
     private void CheckPossessionRadius()
     {
         //_radiusDrawer.StartDrawing();
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mousePosition = GameManager.Camera.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
 
         if (hit.collider != null && hit.collider.CompareTag("Character") && hit.collider.gameObject != _character)
@@ -115,13 +149,13 @@ public class CharacterController : ManagerBehaviour
             CharacterDataHolder characterData = hit.collider.GetComponent<CharacterDataHolder>();
             float distance = Vector3.Distance(characterData.transform.position, 
                 _character ? _character.transform.position: transform.position);
-            if (characterData != null && distance <= _possessionRadius)
+            if (characterData != null && distance <= _possessionRadius && characterData.HP > 0)
             {
                 CharacterSwitch(characterData.gameObject);
             }
             else
             {
-                Debug.Log(distance);
+                //Debug.Log(distance);
             }
         }
     }
@@ -150,12 +184,22 @@ public class CharacterController : ManagerBehaviour
     private void SymbiotePossessionAnimation()
     {
         //Play possession here
-        if (_ftuePrompt)
+        if (Test)
         {
+            Debug.Log("FTUE");
             _ftuePrompt.SetActive(false);
             GameManager.IsWaitingForFirstPossession = false;
+            _symbiote.SetActive(false);
         }
-        _symbiote.SetActive(false);
+        else
+        {
+            GameManager.IsControllable = false;
+            Debug.Log("NO FTUE");
+            GameManager.IsWaitingForFirstPossession = true;
+            _symbiote.SetActive(true);
+            _symbiote.GetComponent<SymbioteController>().AnimatePossession();
+        }
+
     }
 
     private void ResetCurrentCharacter()
@@ -174,8 +218,12 @@ public class CharacterController : ManagerBehaviour
     {
         //switches current character to the new character and reassign all the values
         _character = characterData;
+        _character.name = "Player";
         _rigidBody = _character.GetComponent<Rigidbody2D>();
         _character.GetComponentInChildren<WeaponController>().IsPlayer = true;
+        _characterDataHolder = _character.GetComponent<CharacterDataHolder>();
+        _characterDataHolder.HP += 10;
+        _characterDataHolder.AtkRate *= 0.7f;
     }
 
     private void UpdateEnemyControllers()
@@ -189,6 +237,7 @@ public class CharacterController : ManagerBehaviour
                 {
                     enemyController.gameObject.layer = LayerMask.NameToLayer(_playerLayer);
                     enemyController.WeaponController.InitData();
+                    Destroy(enemyController.CollisionDetector);
                     Destroy(enemyController);
                     continue;
                 }
