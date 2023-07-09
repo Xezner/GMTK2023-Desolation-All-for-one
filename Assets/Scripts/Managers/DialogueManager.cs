@@ -13,6 +13,7 @@ public class DialogueManager : MonoBehaviour
     private float textSpeed;
 
     private int _index;
+
     void Start()
     {
         textComponent.text = string.Empty;
@@ -45,7 +46,7 @@ public class DialogueManager : MonoBehaviour
     }
     IEnumerator ShowLine() //Types the letter 1 by 1
     {
-        foreach (char c in lines[_index].ToCharArray()) // takes string and breakdowns into arrays
+        foreach (char c in lines[_index].ToCharArray()) // takes string and breakdowns letter into arrays
         {
             textComponent.text += c;
             yield return new WaitForSeconds(textSpeed);
