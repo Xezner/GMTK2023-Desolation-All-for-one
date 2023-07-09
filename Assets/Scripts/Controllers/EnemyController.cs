@@ -91,7 +91,9 @@ public class EnemyController : ManagerBehaviour
             Vector2 desiredVelocity = direction * _characterData.Movespeed;
             //desiredVelocity += obstacleDetectionForce + enemyDetectionForce;
 
-            if(distance <= _characterData.AtkRange)
+            _weaponController.IsInRanged = distance <= _characterData.AtkRange;
+
+            if (distance <= _characterData.AtkRange)
             {
                 _rigidbody2D.velocity = Vector2.zero;
             }

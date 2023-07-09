@@ -11,6 +11,7 @@ public class WeaponController : ManagerBehaviour
     [SerializeField] private Transform _spawnPoint;
     public bool CanAttack = true;
     public bool IsRanged = false;
+    public bool IsInRanged = false;
     private float _attackRateHolder = 1f;
     private const string NORMAL_ATTACK_TRIGGER = "NormalAttack";
     
@@ -49,6 +50,10 @@ public class WeaponController : ManagerBehaviour
 
         if (!GameManager.IsGamePaused && GameManager.IsPossessed)
         {
+            if(!IsInRanged && !IsPlayer)
+            {
+                return;
+            }
             //Check if cooldown is over
             if (!CanAttack)
             {

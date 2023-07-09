@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Wizard
   m_EditorClassIdentifier: 
   Character: {fileID: 2587373780839064061, guid: 3d59d67843072b24dbae676fdcdee5d2, type: 3}
-  Name: Boo
+  Name: Fun Size
   HP: 100
   AtkDamage: 30
-  AtkRate: 1.4
+  AtkRate: 1.6
   AtkRange: 5
   ProjectileSpeed: 12
   ProjectileDuration: 0.375

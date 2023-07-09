@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,9 +15,12 @@ public class GameManager : ManagerBehaviour
     [Header("FTUE Prompt")]
     [SerializeField] public GameObject FTUEPrompt;
 
-    
     [Header("Camera")]
     [SerializeField] public Camera Camera;
+
+    [Header("Text")]
+    [SerializeField] private TextMeshProUGUI _healthText;
+    [SerializeField] private TextMeshProUGUI _possessionText;
 
     private int _minimumLifeforce = 5;
 
@@ -48,6 +52,8 @@ public class GameManager : ManagerBehaviour
         {
             RestartGame();
         }
+        _healthText.text = $"HP: {PlayerHP}";
+        _possessionText.text = $"Possess: {PossessionGauge}/5";
     }
 
     public void DebugHere()

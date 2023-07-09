@@ -83,6 +83,7 @@ public class CharacterController : ManagerBehaviour
             Debug.Log("DEAD");
             GameManager.GameOverScreen();
         }
+        GameManager.PlayerHP = _characterDataHolder.HP;
     }
 
     private void FixedUpdate()
@@ -151,7 +152,7 @@ public class CharacterController : ManagerBehaviour
         //_radiusDrawer.StartDrawing();
         Vector2 mousePosition = GameManager.Camera.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
-        Debug.Log(hit.collider.tag + "," + hit.collider.gameObject.name);
+
         if (hit.collider != null && hit.collider.CompareTag("Character") && hit.collider.gameObject != _character)
         {
             CharacterDataHolder characterData = hit.collider.GetComponent<CharacterDataHolder>();
@@ -218,13 +219,16 @@ public class CharacterController : ManagerBehaviour
     private void SwitchToTargetCharacter(GameObject characterData)
     {
         //switches current character to the new character and reassign all the values
+
+        var currentCharacter = _character ? _character.GetComponent<CharacterDataHolder>() : null;
+        var currentHP = currentCharacter ? currentCharacter.HP : 0;
         _character = characterData;
         _character.name = "Player";
         _rigidBody = _character.GetComponent<Rigidbody2D>();
         _character.GetComponentInChildren<WeaponController>().IsPlayer = true;
         _characterDataHolder = _character.GetComponent<CharacterDataHolder>();
         _characterDataHolder.IsStartDegen = true;
-        _characterDataHolder.HP += 100;
+        _characterDataHolder.HP += currentHP;
         GameManager.IsPossessed = true;
         GameManager.PlayerHP = _characterDataHolder.HP;
         _characterDataHolder.AtkRate *= 0.7f;

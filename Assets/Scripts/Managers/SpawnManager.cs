@@ -80,9 +80,14 @@ public class SpawnManager : ManagerBehaviour
         int spawnNumber = WaveCounter == 1 ? 5 : Random.Range(5, 11);
         for(int i = 0; i < spawnNumber; i++)
         {
+            
             int enemyType = Random.Range(0, _spawnList.Count);
             int randomIndex = Random.Range(0, _characterNames.NameList.Count);
 
+            if (WaveCounter == 1 && i <= 1)
+            {
+                enemyType = 0;
+            }
             var controller = FindObjectOfType<CharacterController>();
             _characterController = controller.Character ? controller.Character.transform : controller.transform;
 
