@@ -1047,7 +1047,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.9, y: 0}
+  m_AnchoredPosition: {x: 6, y: -0.00000012625}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &660827100
@@ -1070,15 +1070,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Developer\r\nPrencyl Orven B. Abueg\r\nLead Programmer\r\nCarl Joseph
-    F. Bartolome\r\nGame Programmer \r\nDuane Matthew S. Rodriguez\r\nProgrammer\r\nHynna
-    Marie B. Cristobal\r\nProgrammer\r\nPiolo Andr\xE9 F. Ambion\nProgrammer\r\nGame
-    Design\r\nBryce Gio M. Belencio \r\nGame Designer\r\nArt & Animation\r\nJoanna
-    Rizza W. Bernardino\r\nUI Artist\r\nHannah Patricia B. Capua\r\nEnvironment Artist\r\nKarlo
-    Gatchalian\r\n2D Animator\r\nJames Arlan M. Casul\r\n 2D Animator\r\n"
+  m_text: "GMTK 2023\r\nRaisi'N Games\r\n\r\n\r\nDeveloper\r\nPrencyl Orven B. Abueg\r\nCarl
+    Joseph F. Bartolome\r\nDuane Matthew S. Rodriguez\r\nHynna Marie B. Cristobal\r\nPiolo
+    Andr\xE9 F. Ambion\r\n\r\nGame Design\r\nBryce Gio M. Belencio \r\n\r\nArt &
+    Animation\r\nJoanna Rizza W. Bernardino\r\nHannah Patricia B. Capua\r\nKarlo
+    Gatchalian\r\nJames Arlan M. Casul\r\nJohn Erick R. Alemany\r\nKim Karlo G. Chua\r\n\r\n\r\nThank
+    You For Playing!"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c05c003f4345db34887570ead1b59271, type: 2}
+  m_sharedMaterial: {fileID: -2176160488846802208, guid: c05c003f4345db34887570ead1b59271, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
