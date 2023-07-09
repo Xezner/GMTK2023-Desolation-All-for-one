@@ -79,7 +79,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -175,6 +175,7 @@ MonoBehaviour:
   Movespeed: 0
   TurnRate: 0
   HealthDegen: 0
+  KnockBack: 0
   CharacterType: 0
 --- !u!114 &2498206638619706705
 MonoBehaviour:
@@ -192,6 +193,7 @@ MonoBehaviour:
   _obstacleDetectionRadius: 2
   _collisionDetector: {fileID: 8104970291749522433}
   IsKnockedBack: 0
+  IsDead: 0
 --- !u!1 &7973759373516895687
 GameObject:
   m_ObjectHideFlags: 0

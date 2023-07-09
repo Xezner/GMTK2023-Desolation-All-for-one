@@ -8,6 +8,7 @@ public class WeaponController : ManagerBehaviour
     [SerializeField] private Image _cooldownBar;
     [SerializeField] private WeaponCollisionDetection _weaponCollisionDetection;
     [SerializeField] private ProjectileUtil _projectile;
+    [SerializeField] private Transform _spawnPoint;
     public bool CanAttack = true;
     public bool IsRanged = false;
     private float _attackRateHolder = 1f;
@@ -20,6 +21,8 @@ public class WeaponController : ManagerBehaviour
     private float _attackRate = 1f;
     private float _attackDamage;
     private float _attackRange;
+    private float _projectileDuration;
+    private float _projectileSpeed;
     private CharacterType _characterType;
 
     //PhysicsData
@@ -85,6 +88,8 @@ public class WeaponController : ManagerBehaviour
     {
         _characterData = GetComponentInParent<CharacterDataHolder>();
         _attackRate = _characterData.AtkRate;
+        _projectileDuration = _characterData.ProjectileDuration;
+        _projectileSpeed = _characterData.ProjectileSpeed;
         _cooldownBar = CooldownBarUI.Instance.CooldownBar;
         CanAttack = true;
         _attackRateHolder = _attackRate;
@@ -94,13 +99,14 @@ public class WeaponController : ManagerBehaviour
 
     public void ShootProjectile()
     {
-        var projectile = Instantiate(_projectile, transform.position, Quaternion.identity, SpawnManager.Instance.transform);
+        var spawnPos = _spawnPoint ? _spawnPoint.position : transform.position;
+        var projectile = Instantiate(_projectile, spawnPos, Quaternion.identity, SpawnManager.Instance.transform);
         if (IsPlayer)
         {
             Vector3 launchDirection = FindObjectOfType<CharacterController>().MouseDirection.normalized;
             projectile.transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(launchDirection.y, launchDirection.x) * Mathf.Rad2Deg - 90f);
             projectile.WeaponController = this;
-            projectile.StartProjectileCoroutine(projectile.gameObject, launchDirection);
+            projectile.StartProjectileCoroutine(projectile.gameObject, launchDirection, _projectileDuration, _projectileSpeed);
         }
         else
         {
@@ -109,7 +115,7 @@ public class WeaponController : ManagerBehaviour
             launchDirection = launchDirection.normalized;
             projectile.transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(launchDirection.y, launchDirection.x) * Mathf.Rad2Deg - 90f);
             projectile.WeaponController = this;
-            projectile.StartProjectileCoroutine(projectile.gameObject, launchDirection);
+            projectile.StartProjectileCoroutine(projectile.gameObject, launchDirection, _projectileDuration, _projectileSpeed);
         }
     }
     public void DamagePlayer(float damage)

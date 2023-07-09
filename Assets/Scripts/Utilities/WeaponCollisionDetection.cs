@@ -23,6 +23,12 @@ public class WeaponCollisionDetection : MonoBehaviour
         if (collision.CompareTag("Character"))
         {
             var otherWeaponController = collision.GetComponentInChildren<WeaponController>();
+            if (otherWeaponController == null)
+            {
+                Debug.Log("NULL");
+                return;
+            }
+
             if (_weaponController.IsPlayer && !otherWeaponController.IsPlayer)
             {
                 otherWeaponController.DamagePlayer(_weaponController.CharacterData.AtkDamage);

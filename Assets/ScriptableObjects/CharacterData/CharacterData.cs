@@ -11,6 +11,8 @@ public class CharacterData : ScriptableObject
     public float AtkDamage;
     public float AtkRate;
     public float AtkRange;
+    public float ProjectileSpeed;
+    public float ProjectileDuration;
     public float Movespeed;
     public float TurnRate;
     public int HealthDegen;

@@ -7,13 +7,14 @@ public class ProjectileUtil : MonoBehaviour
     [SerializeField] Collider2D _collider;
     public WeaponController WeaponController;
 
-    float enemyDuration = 0.5f;
-    float enemySpeed = 10f;
-
     float playerDuration = 0.5f;
     float playerSpeed = 12f;
-    public void StartProjectileCoroutine(GameObject projectile, Vector3 launchDirection)
+    public void StartProjectileCoroutine(GameObject projectile, Vector3 launchDirection, float duration, float speed)
     {
+        playerDuration = duration;
+        playerSpeed = speed;
+
+        Debug.Log($"Duration: {duration}, Speed: {speed}");
         _collider.enabled = true;
         StartCoroutine(MoveProjectile(projectile, launchDirection));    
     }
@@ -22,8 +23,8 @@ public class ProjectileUtil : MonoBehaviour
     private IEnumerator MoveProjectile(GameObject projectile, Vector3 launchDirection)
     {
         float elapsedTime = 0f;
-        var duration = WeaponController.IsPlayer ? playerDuration : enemyDuration;
-        var speed = WeaponController.IsPlayer ? playerSpeed : enemySpeed;
+        var duration = playerDuration; // WeaponController.IsPlayer ? playerDuration : playerDuration ;
+        var speed = playerSpeed; //WeaponController.IsPlayer ? playerSpeed : playerSpeed;
         while (elapsedTime < duration)
         {
             // Calculate the distance to move the projectile

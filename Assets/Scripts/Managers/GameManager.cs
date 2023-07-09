@@ -55,6 +55,7 @@ public class GameManager : ManagerBehaviour
         SpawnManager.Instance.DestroyAll();
         SpawnManager.Instance.WaveCounter = 1;
         SpawnManager.Instance.SpawnCharacter();
+        StartCoroutine(ZoomOut());
     }
 
     public float zoomOutDuration = 1f;
