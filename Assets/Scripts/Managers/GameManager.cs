@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class GameManager : ManagerBehaviour
 {
     [Header("MainMenu")]
     [SerializeField] private GameObject _mainMenu;
-
+    [SerializeField] public GameObject background;
+    public GameObject Prompt;
     [Header("GameOver")]
     [SerializeField] private GameObject _gameOver;
 
@@ -40,17 +42,17 @@ public class GameManager : ManagerBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (IsGameStart)
         {
-            GameStart();
-        }
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            SpawnManager.Instance.CleanSpawn();
-        }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            RestartGame();
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                _healthText.text = $"HP:0";
+                GameStart();
+            }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                RestartGame();
+            }
         }
         _healthText.text = $"HP: {PlayerHP}";
         _possessionText.text = $"Possess: {PossessionGauge}/5";
@@ -63,7 +65,13 @@ public class GameManager : ManagerBehaviour
 
     public void GameStart()
     {
+        PlayerHP = 0;
+        _healthText.gameObject.SetActive(true);
+        _possessionText.gameObject.SetActive(true);
+        _healthText.text = $"HP:0";
+        Prompt.SetActive(false);
         _mainMenu.SetActive(false);
+        background.SetActive(false);
         IsGamePaused = false;
         IsWaitingForFirstPossession = false;
         IsControllable = true;
@@ -103,8 +111,15 @@ public class GameManager : ManagerBehaviour
 
     public void RestartGame()
     {
+        PlayerHP = 0;
+        _healthText.text = $"HP:0";
+        _healthText.gameObject.SetActive(false);
+        _possessionText.gameObject.SetActive(false);
+        IsGameStart = false;
         SceneManager.LoadScene(0);
+        Prompt.SetActive(false);
         _mainMenu.SetActive(true);
+        background.SetActive(true);
         IsWaitingForFirstPossession = false;
         IsPossessed = false;
         IsControllable = true;
@@ -116,6 +131,10 @@ public class GameManager : ManagerBehaviour
 
     public void GameOverScreen()
     {
+        PlayerHP = 0;
+        _healthText.text = $"HP:0";
+        _healthText.gameObject.SetActive(false);
+        _possessionText.gameObject.SetActive(false);
         IsGamePaused = true;
         _gameOver.SetActive(true);
     }

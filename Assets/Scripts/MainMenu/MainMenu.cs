@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class MainMenu : ManagerBehaviour
 {
     [SerializeField] private GameObject _options, _mainMenu, _camera;
-
     public void NewGame()
     {
         _mainMenu.SetActive(false);
+        GameManager.background.SetActive(false);
         SceneManager.LoadSceneAsync(1);
+        GameManager.Prompt.SetActive(true);
+        GameManager.IsGameStart = true;
     }
 
     public void Options()

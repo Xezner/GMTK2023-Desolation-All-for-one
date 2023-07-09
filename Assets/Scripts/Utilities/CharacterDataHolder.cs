@@ -80,7 +80,6 @@ public class CharacterDataHolder : ManagerBehaviour
     {
         if (isRunning)
         {
-            Debug.Log("RUN");
             ResetAnimator();
             _characterAnimator.SetBool("IsMoving", isRunning);
             _characterAnimator.SetFloat("MoveX", 1);
@@ -94,7 +93,6 @@ public class CharacterDataHolder : ManagerBehaviour
 
     public void AnimateDeath()
     {
-        Debug.Log("DEATH");
         _characterAnimator.SetFloat("MoveX", 0);
         _characterAnimator.SetTrigger("IsDead");
     }

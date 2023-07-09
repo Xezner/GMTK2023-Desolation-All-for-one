@@ -22,10 +22,10 @@ public class ScenesManager : ManagerBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && GameManager.IsGameStart)
-        {
-            PauseGame();
-        }
+        //if (Input.GetKeyDown(KeyCode.Escape) && GameManager.IsGameStart)
+        //{
+        //    PauseGame();
+        //}
     }
 
     public void DialogueScene()
