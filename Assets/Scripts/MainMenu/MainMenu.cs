@@ -10,6 +10,7 @@ public class MainMenu : ManagerBehaviour
 
     public void NewGame()
     {
+        _mainMenu.SetActive(false);
         SceneManager.LoadSceneAsync(1);
     }
 

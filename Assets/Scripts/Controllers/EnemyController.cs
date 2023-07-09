@@ -79,7 +79,6 @@ public class EnemyController : ManagerBehaviour
         {
             Vector3 direction = (_targetPosition.position - transform.position);
             float distance = direction.magnitude;
-            Debug.Log($"Distance: {distance}");
             direction = direction.normalized;
 
             float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;

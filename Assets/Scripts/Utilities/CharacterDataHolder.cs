@@ -13,6 +13,8 @@ public class CharacterDataHolder : ManagerBehaviour
     public float AtkDamage;
     public float AtkRate;
     public float AtkRange;
+    public float ProjectileSpeed;
+    public float ProjectileDuration;
     public float Movespeed;
     public float TurnRate;
     public int HealthDegen;
@@ -26,6 +28,8 @@ public class CharacterDataHolder : ManagerBehaviour
         AtkDamage = characterData.AtkDamage;
         AtkRate = characterData.AtkRate;
         AtkRange = characterData.AtkRange;
+        ProjectileSpeed = characterData.ProjectileSpeed;
+        ProjectileDuration = characterData.ProjectileDuration;
         Movespeed = characterData.Movespeed;
         TurnRate = characterData.TurnRate;
         HealthDegen = characterData.HealthDegen;

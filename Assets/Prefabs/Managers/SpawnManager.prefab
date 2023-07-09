@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &737091100719511820
 MonoBehaviour:
@@ -47,7 +47,7 @@ MonoBehaviour:
   _spawnList:
   - {fileID: 11400000, guid: afe4a6094a30a3a48abdab1ffa2141b9, type: 2}
   - {fileID: 11400000, guid: 816c5195bc2d0314fb98a255a31da952, type: 2}
-  - {fileID: 11400000, guid: ca59cf95b6f0366409abcd9cf047c5ca, type: 2}
+  - {fileID: 11400000, guid: 043221ae6e100ac4fbbe7b399f3adc4f, type: 2}
   _characterNames: {fileID: 11400000, guid: 4e8a2e7cf1f28384cad8e41bd9784732, type: 2}
   _obstacleMask:
     serializedVersion: 2
@@ -58,3 +58,4 @@ MonoBehaviour:
   _enemyMask:
     serializedVersion: 2
     m_Bits: 128
+  WaveCounter: 0

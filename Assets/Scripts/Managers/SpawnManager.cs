@@ -24,7 +24,11 @@ public class SpawnManager : ManagerBehaviour
     public static SpawnManager Instance;
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
         {
             Instance = this;
         }
