@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Axe
   m_EditorClassIdentifier: 
   Character: {fileID: 2587373780839064061, guid: 7ae1e2a00c1ed624ca007d795a967596, type: 3}
-  Name: Freak
+  Name: Tickles
   HP: 100
   AtkDamage: 30
-  AtkRate: 1.2
+  AtkRate: 2
   AtkRange: 2
   ProjectileSpeed: 0
   ProjectileDuration: 0

@@ -92,7 +92,7 @@ public class EnemyController : ManagerBehaviour
             //desiredVelocity += obstacleDetectionForce + enemyDetectionForce;
 
             _weaponController.IsInRanged = distance <= _characterData.AtkRange;
-
+            _weaponController.CharacterData.AnimateRun(!_weaponController.IsInRanged);
             if (distance <= _characterData.AtkRange)
             {
                 _rigidbody2D.velocity = Vector2.zero;
@@ -193,6 +193,8 @@ public class EnemyController : ManagerBehaviour
 
     IEnumerator WaitTillDead(GameObject character)
     {
+        _characterData.AnimateDeath();
+        _weaponController.AnimationIsDead();
         yield return new WaitForSeconds(1f);
         Destroy(character);
     }

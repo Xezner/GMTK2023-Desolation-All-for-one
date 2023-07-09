@@ -36,6 +36,7 @@ public class SymbioteController : ManagerBehaviour
 
     public void ResetTransfer()
     {
+        _targetCharactrer.TendrilsVFX();
         Debug.Log("END TRANSFER");
         StopCoroutine(PossessionCoroutine());
         ResetSymbiote();

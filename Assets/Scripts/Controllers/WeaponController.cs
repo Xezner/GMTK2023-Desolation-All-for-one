@@ -99,6 +99,7 @@ public class WeaponController : ManagerBehaviour
         CanAttack = true;
         _attackRateHolder = _attackRate;
         _cooldownBar.fillAmount = 0f;
+        _weaponAnimator.SetBool("IsDead", false);
     }
 
 
@@ -129,6 +130,7 @@ public class WeaponController : ManagerBehaviour
         {
             _characterData.HP -= (int)damage;
             _characterData.IsKilled = false;
+            _characterData.BloodVFX();
         }
 
         if(_characterData.HP <= 0 && !IsPlayer)
@@ -138,5 +140,11 @@ public class WeaponController : ManagerBehaviour
         }
 
         Debug.Log($"Isplayer: {IsPlayer}, Is killed: {_characterData.IsKilled}, HP {_characterData.HP}");
+    }
+
+    public void AnimationIsDead()
+    {
+        Debug.Log("IS DEAD");
+        _weaponAnimator.SetTrigger("IsDead");
     }
 }

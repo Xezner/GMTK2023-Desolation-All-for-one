@@ -5,8 +5,9 @@ using UnityEngine;
 public class CharacterDataHolder : ManagerBehaviour
 {
     [SerializeField] private CharacterData _characterData;
-    [SerializeField] private Animator _animator;
-
+    [SerializeField] private Animator _bloodAnimator;
+    [SerializeField] private Animator _tendrilsAnimator;
+    [SerializeField] private Animator _characterAnimator;
     public bool IsStartDegen = false;
     public bool IsKilled = false;
     private float timer = 0f;
@@ -40,6 +41,9 @@ public class CharacterDataHolder : ManagerBehaviour
         KnockBack = characterData.KnockBack;
         CharacterType = characterData.CharacterType;
 
+        ResetAnimator();
+        _characterAnimator.SetBool("IsMoving", false);
+        _characterAnimator.SetFloat("MoveX", 1);
         GetComponentInChildren<WeaponController>().InitData();
     }
 
@@ -60,5 +64,44 @@ public class CharacterDataHolder : ManagerBehaviour
                 timer = 0;
             }
         }
+    }
+    public void BloodVFX()
+    {
+        _bloodAnimator.gameObject.SetActive(false);
+        _bloodAnimator.gameObject.SetActive(true);
+    }
+    public void TendrilsVFX()
+    {
+        _tendrilsAnimator.gameObject.SetActive(false);
+        _tendrilsAnimator.gameObject.SetActive(true);
+    }
+
+    public void AnimateRun(bool isRunning)
+    {
+        if (isRunning)
+        {
+            Debug.Log("RUN");
+            ResetAnimator();
+            _characterAnimator.SetBool("IsMoving", isRunning);
+            _characterAnimator.SetFloat("MoveX", 1);
+        }
+        else
+        {
+            _characterAnimator.SetBool("IsMoving", isRunning);
+        }
+    }
+
+
+    public void AnimateDeath()
+    {
+        Debug.Log("DEATH");
+        _characterAnimator.SetFloat("MoveX", 0);
+        _characterAnimator.SetTrigger("IsDead");
+    }
+
+
+    public void ResetAnimator()
+    {
+        _characterAnimator.ResetTrigger("IsDead");
     }
 }
