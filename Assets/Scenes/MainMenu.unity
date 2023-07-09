@@ -220,10 +220,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7596435525120956635, guid: 470aa67dc59222e41b2ae941a574da07, type: 3}
-      propertyPath: m_SortingOrder
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 9027102233231763264, guid: 470aa67dc59222e41b2ae941a574da07, type: 3}
       propertyPath: m_Name
       value: Managers v3
