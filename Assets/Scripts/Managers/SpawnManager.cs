@@ -36,7 +36,6 @@ public class SpawnManager : ManagerBehaviour
 
     void Start()
     {
-        _characterNames.Start();
         WaveCounter = 1;
     }
 

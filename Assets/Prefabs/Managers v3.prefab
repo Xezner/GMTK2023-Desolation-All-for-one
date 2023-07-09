@@ -1530,7 +1530,7 @@ Transform:
   - {fileID: 5948075947580847035}
   - {fileID: 7577254841484830788}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4035299577317750987
 MonoBehaviour:
@@ -2224,6 +2224,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 5126804354369428002}
+    - target: {fileID: 3866620222754506772, guid: 2e7d79c7b76294345ab7f121ecfa6db5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5295868369350087559, guid: 2e7d79c7b76294345ab7f121ecfa6db5, type: 3}
       propertyPath: m_Name
       value: CANVAS_WorldSpaceUI
